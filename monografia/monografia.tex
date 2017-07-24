@@ -16,7 +16,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \usepackage[english]{babel}
-\usepackage[nolist,nohyperlinks]{acronym}
+\usepackage{acronym}
 \usepackage[T1]{fontenc}
 \usepackage{indentfirst}
 \usepackage{natbib}
@@ -32,6 +32,7 @@
 \usepackage{xcolor, colortbl}
 \usepackage{soul}
 \usepackage{wrapfig}
+\usepackage{glossaries}
 \def\MLine#1{\par\hspace*{-\@totalleftmargin}\parbox{\textwidth}{\[#1\]}}
 
 
@@ -119,13 +120,14 @@ Languages, Java, Featherweight Java, FFJ}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\acrodef{FOP}[FOP]{Feature Oriented Programming}
-\acrodef{ITP}[ITP]{Interactive Theorem Prover}
-\acrodef{FJ}[FJ]{Featherweight Java}
-\acrodef{FFJ}[FFJ]{Feature Featherweight Java}
+\newacronym{FOP}{FOP}{Feature Oriented Programming}
+\newacronym{ITP}{ITP}{Interactive Theorem Prover}
+\newacronym{FJ}{FJ}{Featherweight Java}
+\newacronym{FFJ}{FFJ}{Feature Featherweight Java}
 % \acrodef{FFJ+}[FFJ\textsubscript{+}]{Overhaul Feature Featherweight Java}
-\acrodef{FFJ+}[FFJ$\star$]{Overhaul Feature Featherweight Java}
+\newacronym{FFJ+}{FFJ$\star$}{Overhaul Feature Featherweight Java}
 
+\makeglossaries
 \begin{document}
   \maketitle
   \pretextual
@@ -149,6 +151,7 @@ Languages, Java, Featherweight Java, FFJ}
 
   \input{abstract}
   \tableofcontents
+  \printglossary
   \listoffigures
   \listoftables
 

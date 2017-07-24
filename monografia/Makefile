@@ -18,6 +18,7 @@ default: pdf
 
 pdf:
 	pdflatex monografia.tex
+	makeglossaries monografia
 	bibtex monografia
 	pdflatex monografia.tex
 	pdflatex monografia.tex

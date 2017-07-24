@@ -1,10 +1,10 @@
 \chapter{Overhaul Feature Featherweight Java}\label{seq:ffj}
 
 \section{Syntax}
-The Syntax of \ac{FFJ} is a straightfoward \ac{FOP} extension of \ac{FJ}. Due to the lack
-of space we do not present the formal definition \ac{FJ} nor \ac{FFJ}, but instead we follow
-the same scheme of the \ac{FFJ} original definition in \cite{apel_feature_2008} and present
-the modified rules from \ac{FFJ} to \ac{FFJ+} highlighted with \hlmod{shaded yellow boxes} 
+The Syntax of \gls{FFJ} is a straightfoward \gls{FOP} extension of \gls{FJ}. Due to the lack
+of space we do not present the formal definition \gls{FJ} nor \gls{FFJ}, but instead we follow
+the same scheme of the \gls{FFJ} original definition in \cite{apel_feature_2008} and present
+the modified rules from \gls{FFJ} to \gls{FFJ+} highlighted with \hlmod{shaded yellow boxes} 
 and new rules highlighted by \hlnew{shaded purple boxes}. Also notice that the sucessor and 
 the refinement relations were simply dropped for being unecessary by now.
 
@@ -41,13 +41,13 @@ the refinement relations were simply dropped for being unecessary by now.
         \quad \texttt{new~C(\={e})} \hfill\textit{object creation}
     \end{tabularx}
     \quad
-    \caption{\ac{FFJ} Syntax}
+    \caption{\gls{FFJ} Syntax}
     \label{abstractsyntax}
 \end{table}
 %\end{center}
 
 
-The syntax of \ac{FFJ+} constructs is given at Table~\ref{abstractsyntax}. The metavariables
+The syntax of \gls{FFJ+} constructs is given at Table~\ref{abstractsyntax}. The metavariables
 \texttt{A}, \texttt{B}, \texttt{C}, \texttt{D} and \texttt{E} ranges over class names, \texttt{f} and \texttt{g} range over
 field names; \texttt{m} ranges method name; \texttt{x} ranges over variable, \texttt{v} ranges over
 values, \texttt{feat} ranges over feature names. We assume that the set of variables includes the special variable \texttt{this}, which
@@ -66,7 +66,7 @@ introduces a class \texttt{C} with superclass \texttt{D}. This class has fields 
 of type \texttt{\=C}, a constructor \texttt{K} and methods \texttt{\=M}. The fields of the class \texttt{C}
 is \texttt{\=f} added to the fields of its superclass \texttt{D}, all of them must have distinct names.
 Methods, on the other hand, may override another superclass method with the same name.
-Method override in both \ac{FFJ} and \ac{FFJ+} is basically method rewriting. 
+Method override in both \gls{FFJ} and \gls{FFJ+} is basically method rewriting. 
 Methods are uniquely identified by its name, i.e. overloading is not supported.
 
 A class refinement \texttt{refines~class~C@feat~\{\={C}~\={f};~KD~\={M}~\={MR}\}}
@@ -91,12 +91,12 @@ to recognize the difference between method refinement and inadvertent overriding
 
 A class table \textsf{CT} is a mapping from class names \texttt{C} to class declarations \texttt{CD}.
 A refinement table \textsf{RT} is a mapping from refinement name \texttt{C@feat} to refinement declarations.
-An \ac{FFJ} program consists of a triple (\textsf{CT}, \textsf{RT}, \texttt{e}) of a class table, a refinement table
+An \gls{FFJ} program consists of a triple (\textsf{CT}, \textsf{RT}, \texttt{e}) of a class table, a refinement table
 and an expression. Throughout the rest of the paper the \textsf{CT} and the RT are assumed to be always fixed to lighten the notation.
 
 \section{Lookup Functions}\label{subsec:lookup}
 
-In \ac{FFJ} as well as in \ac{FJ} types are classes and classes have a subclass relation defined by the syntax of class declaration.
+In \gls{FFJ} as well as in \gls{FJ} types are classes and classes have a subclass relation defined by the syntax of class declaration.
 To navigate this subclass relation in the \textsf{CT}, the auxiliary operator \texttt{<:} is given in Table \ref{table:sub_pred}, this operator is 
 the reflexive and transitive closure of the subclass relation.
 
@@ -127,7 +127,7 @@ The \textsf{CT} is expected to satisfy some sanity conditions:
 \end{table}
 
 
-In \ac{FFJ+} we fetch the refinement precedence via its position in the \textsf{RT}, i.e.
+In \gls{FFJ+} we fetch the refinement precedence via its position in the \textsf{RT}, i.e.
 if a refinement of a class appears first in the \textsf{RT} it will be applied first. 
 These functions to navigate the \textsf{RT} are all defined in Table \ref{table:refinement}
     
@@ -143,7 +143,7 @@ and return the element \texttt{P} at the position $n-1$ in \texttt{\=R} (denoted
 because it is not defined if the a refinement is the first refinement.
 
 The \textit{last} function retrieves the last refinement of a given class \texttt{C}.
-This is needed because in \ac{FFJ+} we navigate the refinement chain backwards, from the last refinement
+This is needed because in \gls{FFJ+} we navigate the refinement chain backwards, from the last refinement
 to the first, looking for a given method or field. 
 
 \begin{table}[!ht]
@@ -190,7 +190,7 @@ to the first, looking for a given method or field.
 \end{table}
 
 With this in hand we can define the actual lookup functions $fields$, $mtypes$ and $mbody$.
-They are taken directly from \ac{FFJ} definition, with a new hypothesis and an extra rule.
+They are taken directly from \gls{FFJ} definition, with a new hypothesis and an extra rule.
 The extra rule and hypothesis makes reference to dealing with the refinements. This is necessary
 to make the proofs easier to maintain, since all we need to do is to provide a few acceptance lemmas
 about these new lookup functions which we name $fields_R$, $mtype_R$ and $mbody_R$.
@@ -198,8 +198,8 @@ about these new lookup functions which we name $fields_R$, $mtype_R$ and $mbody_
 $fields_R$ simply retrieves the fields of all refinements up to that point in the refinement chain.
 
 $mtype_R$ and $mbody_R$ tries to find the last introduction to a method, and retrieves its type or body.
-Notice that these two definitions greatly differs from \ac{FFJ} to \ac{FFJ+}. In \ac{FFJ} $mtype$ would
-retrieve the typing of the first method introduction, whereas in \ac{FFJ+} it will retrieve the
+Notice that these two definitions greatly differs from \gls{FFJ} to \gls{FFJ+}. In \gls{FFJ} $mtype$ would
+retrieve the typing of the first method introduction, whereas in \gls{FFJ+} it will retrieve the
 type of the last method refinement, and only later we define the rules for guarantying that the
 refinement always has the same type of the method declaration. This was made to greatly simplify
 the proof that states that if a method has $mtype$ then it also has a $mbody$, since both 
@@ -430,7 +430,7 @@ Introduce in~\ref{table:introduce} function checks if a method was not yet decla
 
     \end{tabular}
 \label{typing2}
-\caption{Method typing in \ac{FFJ+}}
+\caption{Method typing in \gls{FFJ+}}
 \end{table}
 
 \begin{table}[h!]
@@ -446,15 +446,15 @@ Introduce in~\ref{table:introduce} function checks if a method was not yet decla
             {\mathtt{\crefine{R}{C}{f}{KR}{M}{MR}~OK}}\\\\
     \end{tabular}
 \label{typing2}
-\caption{Class and refinement typing in \ac{FFJ+}}
+\caption{Class and refinement typing in \gls{FFJ+}}
 \label{table:classtyping}
 \end{table}
 
-Every class and refinement of a \ac{FFJ+} program is assumed to respect the well-formednes rules
+Every class and refinement of a \gls{FFJ+} program is assumed to respect the well-formednes rules
 defined in~\ref{table:classtyping}.
 
 \section{Typing and Reduction}
-The typing and computation rules for expressions are elided since are the same as \ac{FJ}. An environment
+The typing and computation rules for expressions are elided since are the same as \gls{FJ}. An environment
 $\Gamma$ is a finite mapping from variables to types, written $\bar{c}:\bar{C}$.
 The typing judgment for expressions has the form $\Gamma \vdash e: C$, read ``in
 the environment $\Gamma$, expression $e$ has type $C$''.
