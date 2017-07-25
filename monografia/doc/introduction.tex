@@ -1,53 +1,53 @@
 
 \chapter{Introduction}
-\textit{\acf{FOP}} \cite{prehofer_feature-oriented_1997} is a design methodology and tools for program synthesis \cite{batory_tutorial_2003}.
+\textit{\gls{FOP}} \cite{prehofer_feature-oriented_1997} is a design methodology and tools for program synthesis \cite{batory_tutorial_2003}.
 It aims at the modularization of software systems in terms of features. A \textit{feature}
 implements a stakeholder's requirement and is typically an increment in program functionality.
 When added to a software system, a feature introduce new structures, such as classes and methods,
 and refines existing ones, such as extending methods bodies.
 
-There are several \ac{FOP} languages and tools that provides varying mechanisms
+There are several \gls{FOP} languages and tools that provides varying mechanisms
 that support the specification and composition of features properly, such as AHEAD \cite{batory_feature-oriented_2004},
-FSTComposer \cite{apel_superimposition:_2008}, FeatureC++ \cite{apel_featurec++:_2005}, and more recently Delta-Oriented Programming \cite{schaefer_delta-oriented_2010}. \ac{FOP} has mostly been used to develop
+FSTComposer \cite{apel_superimposition:_2008}, FeatureC++ \cite{apel_featurec++:_2005}, and more recently Delta-Oriented Programming \cite{schaefer_delta-oriented_2010}. \gls{FOP} has mostly been used to develop
 \textit{product-lines} in disparate domains, including compilers for extensible Java dialects 
 \cite{batory_jts:_1998}, fire support simulators for U.S. Army \cite{batory_achieving_2000}, high-performance network
 \cite{batory_design_1992}, and program verification tools \cite{kurt_stirewalt_component-based_2001}.
 
-Due to the relevance of \ac{FOP}, falar sobre lps...
+Due to the relevance of \gls{FOP}, falar sobre lps...
 
-Several attempts to formalize the type system of \ac{FOP} languages have been made. %Citar todas formalizações de delta oriented programmaning
-For instance,  \textit{\acf{FFJ}} \cite{apel_feature_2008} is a proposed type system for \ac{FOP} languages and tools, 
-which is developed on top of \textit{\acf{FJ}} \cite{igarashi_featherweight_2001}
-to provide a simple syntax and semantics conforming with common \ac{FOP} languages, 
+Several attempts to formalize the type system of \gls{FOP} languages have been made. %Citar todas formalizações de delta oriented programmaning
+For instance,  \textit{\gls{FFJ}} \cite{apel_feature_2008} is a proposed type system for \gls{FOP} languages and tools, 
+which is developed on top of \textit{\gls{FJ}} \cite{igarashi_featherweight_2001}
+to provide a simple syntax and semantics conforming with common \gls{FOP} languages, 
 incorporating constructs for feature composition. %Falar de alguma formalizacao de DOP.
 
-Nevertheless, none of the existing efforts for specifying \ac{FFJ} type system have been mechanized to date.
+Nevertheless, none of the existing efforts for specifying \gls{FFJ} type system have been mechanized to date.
 Which means that we have no formal guarantees that the specification is type-safe other than peer review. 
 Such a method is known for enabling small errors to remain hidden for several years, specially as the proofs grow larger and harder to follow.
 The idea behind mechanization is to check these proofs with the aid of a computer, reducing significantly the risk of errors, while 
 taking full use of automation for the tedious or straightforward steps of the proof.
 
-In this paper, we present an implementation of \ac{FJ} which we extend with \ac{FFJ} using \texttt{Coq}.
-The process of scrutinizing \ac{FFJ} and defining \textit{unambiguously} its semantics in \texttt{Coq} 
+In this paper, we present an implementation of \gls{FJ} which we extend with \gls{FFJ} using \texttt{Coq}.
+The process of scrutinizing \gls{FFJ} and defining \textit{unambiguously} its semantics in \texttt{Coq} 
 lead us to some language specification and implementation improvements. The biggest change was to review and
 simplify the lookup functions of the refinement table.
-Henceforth, we refer this proposed calculus as \ac{FFJ+} to distinguish it when comparing our implementation to the original \ac{FFJ} design.
-Altogether the improvements proposed in \ac{FFJ+} makes the transition more natural between \ac{FJ} and \ac{FFJ}, 
+Henceforth, we refer this proposed calculus as \gls{FFJ+} to distinguish it when comparing our implementation to the original \gls{FFJ} design.
+Altogether the improvements proposed in \gls{FFJ+} makes the transition more natural between \gls{FJ} and \gls{FFJ}, 
 simplifying the auxiliary functions used in the language specification as well as the type safety proofs and lemmas. 
-This allows defining \ac{FFJ+} with incremental changes to \ac{FJ} syntax and semantics, 
+This allows defining \gls{FFJ+} with incremental changes to \gls{FJ} syntax and semantics, 
 and consequently, incremental changes to proofs, leading to a clearer and simpler specification of \textit{FFJ}.
 Hence we can summarize the main contribution of this paper as follows:
 \begin{enumerate}
-    \item The first mechanization of the \ac{FFJ} type system
+    \item The first mechanization of the \gls{FFJ} type system
     \item An improved specification of FFJ, which may help other researchers to reason about software product lines properties.
     \item A report about the benefits of using a proof assistant 
     to revamp an existing specification of a non-mechanized language type system.
 \end{enumerate}
 
 This paper is organized as follows: in the Section~\ref{seq:coq} we give a brief introduction to \texttt{Coq} 
-Section~\ref{seq:fop} briefly introduces software product lines, \ac{FOP} and \ac{FFJ},
-Section~\ref{seq:offj} gives a brief introduction of  \ac{FFJ+} and explains the main differences with \ac{FJ}
-Section~\ref{seq:ffj} formally describes our revamped \ac{FFJ} and states the lemmas needed to preserve \ac{FJ} increment to \ac{FFJ} type safety, 
+Section~\ref{seq:fop} briefly introduces software product lines, \gls{FOP} and \gls{FFJ},
+Section~\ref{seq:offj} gives a brief introduction of  \gls{FFJ+} and explains the main differences with \gls{FJ}
+Section~\ref{seq:ffj} formally describes our revamped \gls{FFJ} and states the lemmas needed to preserve \gls{FJ} increment to \gls{FFJ} type safety, 
 Section~\ref{seq:impl} discuss the implications of these results to the product line research,
 Section~\ref{seq:related} discuss related works and
 Section~\ref{seq:conclusion} is the conclusion and shows possible future works.
