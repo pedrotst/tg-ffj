@@ -17,17 +17,26 @@ Due to the relevance of \gls{FOP}, falar sobre lps...
 
 Several attempts to formalize the type system of \gls{FOP} languages have been made. %Citar todas formalizações de delta oriented programmaning
 For instance,  \textit{\gls{FFJ}} \cite{apel_feature_2008} is a proposed type system for \gls{FOP} languages and tools, 
-which is developed on top of \textit{\gls{FJ}} \cite{igarashi_featherweight_2001}
+which is developed on top of \textit{\gls{FJ}}~\cite{igarashi_featherweight_2001}
 to provide a simple syntax and semantics conforming with common \gls{FOP} languages, 
 incorporating constructs for feature composition. %Falar de alguma formalizacao de DOP.
 
-Nevertheless, none of the existing efforts for specifying \gls{FFJ} type system have been mechanized to date.
-Which means that we have no formal guarantees that the specification is type-safe other than peer review. 
-Such a method is known for enabling small errors to remain hidden for several years, specially as the proofs grow larger and harder to follow.
-The idea behind mechanization is to check these proofs with the aid of a computer, reducing significantly the risk of errors, while 
-taking full use of automation for the tedious or straightforward steps of the proof.
+Nevertheless, very few effort was made to mechanize a \gls{FOP} language. In matter of fact, only one
+\gls{FOP} language was implemented with a proof assistant to date, it is known as LFJ~\cite{delaware2009machine}
+Mechanizing a language is interesting because it makes the proofs even more reliable than peer review.
+Take for an instance the Perko Pairs~\cite{little1900xxx}. 
+They were listed by C.N Little as different knots in 1885, and only almost a century latter, 
+in 1974 Ken Perko discovered~\cite{rolfsen1976knots} them to actually be the same knot!
 
-In this paper, we present an implementation of \gls{FJ} which we extend with \gls{FFJ} using \texttt{Coq}.
+The idea behind mechanization is to check these proofs with the aid of a computer, reducing significantly the risk of errors, while 
+taking full use of automation for the tedious or straightforward steps of the proof. As the system may grow, the mechanization makes
+the proof a lot more reliable.
+
+And also, mechanized proofs leads a better organization when the system grows larger.
+Better organization of the proof process allows to build teams for these proofs. 
+This allows to mechanize correctness properties of big, real world implementations, e.g. compilers~\cite{leroy2012compcert}, 
+file systems~\cite{arkoudas2004verifying, amani2015specifying} and languages~\cite{hartel2000formalising, klein2006machine}. 
+
 The process of scrutinizing \gls{FFJ} and defining \textit{unambiguously} its semantics in \texttt{Coq} 
 lead us to some language specification and implementation improvements. The biggest change was to review and
 simplify the lookup functions of the refinement table.
@@ -36,16 +45,18 @@ Altogether the improvements proposed in \gls{FFJ+} makes the transition more nat
 simplifying the auxiliary functions used in the language specification as well as the type safety proofs and lemmas. 
 This allows defining \gls{FFJ+} with incremental changes to \gls{FJ} syntax and semantics, 
 and consequently, incremental changes to proofs, leading to a clearer and simpler specification of \textit{FFJ}.
+
+
+The main goal of this paper is to present a novel mechanization of a \gls{FOP} language. In particular, the mechanization of \gls{FFJ+}.
 Hence we can summarize the main contribution of this paper as follows:
 \begin{enumerate}
     \item The first mechanization of the \gls{FFJ} type system
-    \item An improved specification of FFJ, which may help other researchers to reason about software product lines properties.
-    \item A report about the benefits of using a proof assistant 
-    to revamp an existing specification of a non-mechanized language type system.
+    \item An improved specification of \gls{FFJ}, which may help other researchers to reason about software product lines properties.
+    \item A report about the benefits of using a proof assistant to revamp an existing specification of a non-mechanized language type system.
 \end{enumerate}
 
 This paper is organized as follows: in the Section~\ref{seq:coq} we give a brief introduction to \texttt{Coq} 
-Section~\ref{seq:fop} briefly introduces software product lines, \gls{FOP} and \gls{FFJ},
+Section~\ref{seq:fop} briefly introduces software product lines, \gls{FOP} and \gls{FFJ+},
 Section~\ref{seq:offj} gives a brief introduction of  \gls{FFJ+} and explains the main differences with \gls{FJ}
 Section~\ref{seq:ffj} formally describes our revamped \gls{FFJ} and states the lemmas needed to preserve \gls{FJ} increment to \gls{FFJ} type safety, 
 Section~\ref{seq:impl} discuss the implications of these results to the product line research,
