@@ -1,20 +1,12 @@
-\chapter{Theory Fundaments}
+\chapter{Theory Fundamentals}
 Under the context of software engineering, a lot of effort have been spent in the scope of \textit{reuse}.
 However most of the effort have been made code reuse, and not that much into software reuse as a whole.
 
 In this chapter we provide the necessary definitions to understand \gls{FOP},
-to simplify the understanding we will take the examples under software product.
+and how this paradigm copes with software reuse.
+To simplify the understanding we will take the examples under software product lines.
 This will also make clear how mechanizing a \gls{FOP} language shall benefit real world applications.
 
-
-\section{Software Product Line}
-In the 70's the concept of software families was introduced by Parnas~\cite{parnas1976design}. 
-It's main goal was to enhance the versatility to the development of the artefact's 
-non-functional requirements. Upon this, the concept of \gls{SPL}
-was formalized with the purpose of projecting several softwares
-with similar characteristics under a single domain.
-
-\gls{SPL} is a Software Engineering paradigm 
 
 \section{Feature Oriented Programming}\label{seq:fop}
 
@@ -31,6 +23,37 @@ software product lines~\cite{}.
 FOP has been implemented using both programming 
 language extensions and tooling support, such as 
 Java AHEAD Tool Suite~\cite{batory_feature-oriented_2004} and \textsc{FeatureC++}~\cite{apel_featurec++:_2005}. 
+
+
+\section{Software Product Line}
+In the 70's the concept of software families was introduced by Parnas~\cite{parnas1976design}. 
+It's main goal was to enhance the versatility to the development of the artefact's 
+non-functional requirements. Upon this, the concept of \gls{SPL}
+was formalized with the purpose of projecting several softwares
+with similar characteristics under a single domain.
+
+Sommerville\cite{Sommerville:2010:SE:1841764} defines\gls{SPL} as one of the most effective approaches to reuse.
+And defines it as a set of applications with a common architecture and shared components.
+
+As the name suggest, \gls{SPL} idea comes from Ford's product lines. With a product line
+it is possible to build several different specializations of the same product, while
+improving efficiency and reducing cost. This allow mass individualization of the products, i.e. even though the industry is still delivering products in mass scale,
+it still provides somewhat individualized products for different kinds of clients.
+The analogue still holds for \gls{SPL}, it proposes a framework which allows to build
+several different specializations of the software, 
+while reducing delivery time which by its turn reduces cost.
+
+Take for example a \gls{SPL} illustrated in \ref{fig:cellphone-fm} for a mobile phone operational system. Every cellphone
+must be able to make calls and receive calls and having a screen. 
+But there are optional features, such as having a GPS, being able to reproduce media,
+etc.
+
+\begin{wrapfigure}{r}{0.45\textwidth}
+\centering
+\includegraphics[scale=0.35]{doc/images/mobile-spl}
+\label{fig:cellphone-fm}
+\caption{Cellphone OS feature model} 
+\end{wrapfigure} 
 
 \section{A Running Example: The Expression Product Line in \gls{FOP}}
 
