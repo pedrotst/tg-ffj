@@ -32,7 +32,7 @@ non-functional requirements. Upon this, the concept of \gls{SPL}
 was formalized with the purpose of projecting several softwares
 with similar characteristics under a single domain.
 
-Sommerville\cite{Sommerville:2010:SE:1841764} defines\gls{SPL} as one of the most effective approaches to reuse.
+Sommerville~\cite{Sommerville:2010:SE:1841764} defines \gls{SPL} as one of the most effective approaches to reuse.
 And defines it as a set of applications with a common architecture and shared components.
 
 As the name suggest, \gls{SPL} idea comes from Ford's product lines. With a product line
@@ -48,17 +48,17 @@ Every cellphone must be able to make calls and receive calls and having a screen
 But there are optional features, such as having a GPS, being able to reproduce media,
 etc.
 
-\begin{wrapfigure}{r}{0.45\textwidth}
-\centering
-\includegraphics[scale=0.35]{doc/images/mobile-spl}
-\label{fig:cellphone-fm}
-\caption{Cellphone OS feature model} 
-\end{wrapfigure} 
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.7]{doc/images/mobile-spl}
+    \label{fig:cellphone-fm}
+    \caption{Cellphone OS feature model} 
+\end{figure} 
 
 Formally a \gls{SPL} is defined by a triple: the \gls{FM}, \gls{CA},
 and the \gls{CK}.
 
-The \gls{FM} is the set of all features. They may be: \emph{obligatory}, \emph{optional}, \emph{alternative}, \emph{and} and \emp{or}.
+The \gls{FM} is the set of all features. They may be: \emph{obligatory}, \emph{optional}, \emph{alternative}, \emph{and} and \emph{or}.
 
 The \gls{CA} is everything useful in the process of development, such as documentation, test cases, code, and so on.
 
@@ -81,10 +81,10 @@ and provide safety theorems for \glspl{SPL} without having to generate every sin
 \section{A Running Example: The Expression Product Line in \gls{FOP}}
 
 \begin{wrapfigure}{r}{0.45\textwidth}
-\centering
-\includegraphics[scale=0.35]{doc/images/epl_fm}
-\label{fig:epl_fm}
-\caption{EPL feature model} 
+    \centering
+    \includegraphics[scale=0.35]{doc/images/epl_fm}
+    \label{fig:epl_fm}
+    \caption{EPL feature model} 
 \end{wrapfigure} 
 
 
@@ -105,33 +105,32 @@ only introduce new elements to the \textsc{Base} AHEAD package
 of Figure~\ref{fig:epl-base}.  
 
 \begin{figure}[htb]
-\centering{
-\includegraphics[scale=0.5]{doc/images/base.pdf}
-}
-\label{fig:epl-base}
-\caption{The \textsc{base} package of the Expression Product Line}
+    \centering{
+        \includegraphics[scale=0.5]{doc/images/base.pdf}
+    }
+    \label{fig:epl-base}
+    \caption{The \textsc{base} package of the Expression Product Line}
 \end{figure} 
 
 The details of the EPL AHEAD non-mandatory feature packages are as follows. 
 
 \begin{itemize}
-\item Features \texttt{integer} and {double} refine the \texttt{Value} class of 
-the \textsc{Base} package by introducing a new attribute named 
-\texttt{value}, either with type \texttt{int} or \texttt{double}. According 
-to the EPL feature model, only one of these features might be selected for 
-a given product. 
+    \item Features \texttt{integer} and {double} refine the \texttt{Value} class of 
+    the \textsc{Base} package by introducing a new attribute named 
+    \texttt{value}, either with type \texttt{int} or \texttt{double}. According 
+    to the EPL feature model, only one of these features might be selected for 
+    a given product. 
 
-\item The \texttt{expressions} feature introduces two new expressions 
-to those declared in the \textsc{Base} package, one for multiplication 
-and another for division. This particular feature does not refine 
-existing classes, only introduces new ones. 
+    \item The \texttt{expressions} feature introduces two new expressions 
+    to those declared in the \textsc{Base} package, one for multiplication 
+    and another for division. This particular feature does not refine 
+    existing classes, only introduces new ones. 
 
-\item The \texttt{pretty\_printer} feature introduces the support for 
-\emph{pretty printing} expressions. It refines the \texttt{Expression} 
-interface and the \texttt{BinaryExpression} and \texttt{Value} classes, 
-introducing a new method \texttt{print()} and also a 
-new attribute (\texttt{operator}) for the \texttt{BinaryExpression} class.
-
+    \item The \texttt{pretty\_printer} feature introduces the support for 
+    \emph{pretty printing} expressions. It refines the \texttt{Expression} 
+    interface and the \texttt{BinaryExpression} and \texttt{Value} classes, 
+    introducing a new method \texttt{print()} and also a 
+    new attribute (\texttt{operator}) for the \texttt{BinaryExpression} class.
 \end{itemize}
 
 
