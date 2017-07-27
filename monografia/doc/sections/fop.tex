@@ -19,7 +19,7 @@ and thus are orthogonal to the typical object-oriented
 decomposition in terms of class hierarchies. 
 Successful FOP usage scenarios have been reported in the literature 
 for the domains of highly configurable systems and
-software product lines~\cite{}.  
+software product lines~\cite{}.
 FOP has been implemented using both programming 
 language extensions and tooling support, such as 
 Java AHEAD Tool Suite~\cite{batory_feature-oriented_2004} and \textsc{FeatureC++}~\cite{apel_featurec++:_2005}. 
@@ -43,8 +43,8 @@ The analogue still holds for \gls{SPL}, it proposes a framework which allows to 
 several different specializations of the software, 
 while reducing delivery time which by its turn reduces cost.
 
-Take for example a \gls{SPL} illustrated in \ref{fig:cellphone-fm} for a mobile phone operational system. Every cellphone
-must be able to make calls and receive calls and having a screen. 
+Take for example a \gls{SPL} illustrated in \ref{fig:cellphone-fm} for a mobile phone operational system. 
+Every cellphone must be able to make calls and receive calls and having a screen. 
 But there are optional features, such as having a GPS, being able to reproduce media,
 etc.
 
@@ -54,6 +54,29 @@ etc.
 \label{fig:cellphone-fm}
 \caption{Cellphone OS feature model} 
 \end{wrapfigure} 
+
+Formally a \gls{SPL} is defined by a triple: the \gls{FM}, \gls{CA},
+and the \gls{CK}.
+
+The \gls{FM} is the set of all features. They may be: \emph{obligatory}, \emph{optional}, \emph{alternative}, \emph{and} and \emp{or}.
+
+The \gls{CA} is everything useful in the process of development, such as documentation, test cases, code, and so on.
+
+The \gls{CK} is a mapping between features to assets, driving product generation.
+
+With that in hand it is possible to compose the assets in order to provide a new product. However, it is not guaranteed that this composition process is safe, i.e.
+that every asset selected copes well with each other. This leads us to the safe composition problem.
+
+In order to tackle this safe composition problem, one could manually inspect
+\gls{FM}, \gls{CK} and implementation to understand the dependencies between assets for all products. However, since \glspl{SPL} can quickly scale to hundreds of products,
+this is often impractical.
+
+Another approach would be to generate every single product, compile and test them.
+While this is an useful and safe approach, it does not scale given the exponential 
+factor in every feature introduction.
+
+This is where formal methods shines. With formal methods it is possible to study how features interact with each other, postulate properties,
+and provide safety theorems for \glspl{SPL} without having to generate every single product.
 
 \section{A Running Example: The Expression Product Line in \gls{FOP}}
 
@@ -127,4 +150,4 @@ and \texttt{pretty\_printer}, we will get
 a product as shown in Figure~\ref{fig:epl-instance}. 
 
 
-
+\section{Software Product line formal verification}
