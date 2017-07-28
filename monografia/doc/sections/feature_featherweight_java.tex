@@ -47,7 +47,7 @@ the refinement relations were simply dropped for being unecessary by now.
 %\end{center}
 
 
-The syntax of \gls{FFJ+} constructs is given at Table~\ref{abstractsyntax}. The metavariables
+The syntax of \gls{FFJ+} constructs is given at \cref{abstractsyntax}. The metavariables
 \texttt{A}, \texttt{B}, \texttt{C}, \texttt{D} and \texttt{E} ranges over class names, \texttt{f} and \texttt{g} range over
 field names; \texttt{m} ranges method name; \texttt{x} ranges over variable, \texttt{v} ranges over
 values, \texttt{feat} ranges over feature names. We assume that the set of variables includes the special variable \texttt{this}, which
@@ -66,7 +66,7 @@ introduces a class \texttt{C} with superclass \texttt{D}. This class has fields 
 of type \texttt{\=C}, a constructor \texttt{K} and methods \texttt{\=M}. The fields of the class \texttt{C}
 is \texttt{\=f} added to the fields of its superclass \texttt{D}, all of them must have distinct names.
 Methods, on the other hand, may override another superclass method with the same name.
-Method override in both \gls{FFJ} and \gls{FFJ+} is basically method rewriting. 
+Method override \gls{FFJ+} is basically method rewriting. 
 Methods are uniquely identified by its name, i.e. overloading is not supported.
 
 A class refinement \texttt{refines~class~C@feat~\{\={C}~\={f};~KD~\={M}~\={MR}\}}
@@ -74,7 +74,7 @@ introduces a refinement of the class \texttt{C} and belongs to the feature \text
 This refinement contains the fields  \texttt{\=f} of type \texttt{\=C}, 
 a constructor refinement \texttt{KR}, methods declarations \texttt{\=M} and method refinements $\overline{\texttt{MR}}$.
 Like class declarations, the fields of a class refinement \texttt{R} are added to the fields of its predecessor, which
-is explained in more detail in Section \ref{subsec:lookup}.
+is explained in more detail in \Cref{subsec:lookup}.
 
 Constructor declaration \texttt{C(\={C}~\={f})\{super(\={f}); this.\={f}=\={f};\}} and a constructor refinement 
 \texttt{refines~C(\={E}~\={h}, \={C}~\={f}) \{original(\={f}); this.\={f}=\={f};\}} introduce a constructor 
@@ -97,7 +97,7 @@ and an expression. Throughout the rest of the paper the \textsf{CT} and the RT a
 \section{Lookup Functions}\label{subsec:lookup}
 
 In \gls{FFJ} as well as in \gls{FJ} types are classes and classes have a subclass relation defined by the syntax of class declaration.
-To navigate this subclass relation in the \textsf{CT}, the auxiliary operator \texttt{<:} is given in Table \ref{table:sub_pred}, this operator is 
+To navigate this subclass relation in the \textsf{CT}, the auxiliary operator \texttt{<:} is given in \Cref{table:sub_pred}, this operator is 
 the reflexive and transitive closure of the subclass relation.
 
 The \textsf{CT} is expected to satisfy some sanity conditions:
@@ -129,7 +129,7 @@ The \textsf{CT} is expected to satisfy some sanity conditions:
 
 In \gls{FFJ+} we fetch the refinement precedence via its position in the \textsf{RT}, i.e.
 if a refinement of a class appears first in the \textsf{RT} it will be applied first. 
-These functions to navigate the \textsf{RT} are all defined in Table \ref{table:refinement}
+These functions to navigate the \textsf{RT} are all defined in \Cref{table:refinement}
     
 First we have the function $class\_name$ which retrieves the name of a class refinement.
 
@@ -351,9 +351,9 @@ functions follows the same structure the proof is straightforward.
     \caption{Method Body lookup}
 \end{table}
 
-Override function in~\ref{table:override} inductively guaranties that a method refinement respects the 
-type a method was introduced for the first time, which can be in a super class or in a previous
-refinement.
+Override function in \Cref{table:override} inductively guaranties that a method 
+or method refinement respects the type of the method was introduced for the first time, 
+which can be in a super class or in a previous refinement.
 
 \begin{table}
 	\centering
@@ -387,7 +387,8 @@ refinement.
     \label{table:override}
 \end{table}
 
-Introduce in~\ref{table:introduce} function checks if a method was not yet declared earlier in the refinement chain.
+Introduce in \Cref{table:introduce} function checks if a method was 
+not yet declared earlier in the refinement chain.
 \begin{table}
 	\centering
 	\begin{tabular}{c}
@@ -425,11 +426,11 @@ Introduce in~\ref{table:introduce} function checks if a method was not yet decla
         \rowcolor{shpurple}
         \inferrule{\mathtt{\bar{x}: \bar{C}, this: C~\vdash t_0 : E_0\qquad E_0 <: C_0 \qquad R~=~C@feat} \\ \\
                 \mathtt{RT(R)~=~refines~R~\{\dots~\bar{M},~\overline{MR}~\dots\} \qquad m\notin\bar{M} \qquad m\in\overline{MR}}\\ \\
-                \mathtt{\mathnormal{override_R}(m, R, \bar{C}\rightarrow C) \qquad \mathnormal{introduce}~m~R}}
+                \mathtt{\mathnormal{override_R}(m, R, \bar{C}\rightarrow C)}}
             {\mathtt{refines~C_0~m~(\bar{C}~\bar{x})\{return~t_0;\}~OK~in~R}}\\\\
 
     \end{tabular}
-\label{typing2}
+\label{method-typing}
 \caption{Method typing in \gls{FFJ+}}
 \end{table}
 
@@ -451,7 +452,14 @@ Introduce in~\ref{table:introduce} function checks if a method was not yet decla
 \end{table}
 
 Every class and refinement of a \gls{FFJ+} program is assumed to respect the well-formednes rules
-defined in~\ref{table:classtyping}.
+defined in \Cref{table:classtyping}.
+A well formed class have only well formed methods. And a well formed class refinement
+only have well formed methods and well formed method refinements.
+A well formed method and method refinement must has a closed expression \texttt{e} under 
+the variables of the function parameters. \texttt{e} must a subtype of the return
+type of the function. And if a function with the same name was declared before, 
+it must have the same name. If a method refinement is declared in a method refinement,
+this rule guarantess that it will override the superclass accordingly.
 
 \section{Typing and Reduction}
 The typing and computation rules for expressions are elided since are the same as \gls{FJ}. An environment
