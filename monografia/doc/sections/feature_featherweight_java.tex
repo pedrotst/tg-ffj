@@ -1,12 +1,12 @@
 \chapter{Overhaul Feature Featherweight Java}\label{seq:ffj}
 
 \section{Syntax}
-The Syntax of \gls{FFJ} is a straightfoward \gls{FOP} extension of \gls{FJ}. Due to the lack
+The Syntax of \gls{FFJ} is a straightforward \gls{FOP} extension of \gls{FJ}. Due to the lack
 of space we do not present the formal definition \gls{FJ} nor \gls{FFJ}, but instead we follow
 the same scheme of the \gls{FFJ} original definition in \cite{apel_feature_2008} and present
 the modified rules from \gls{FFJ} to \gls{FFJ+} highlighted with \hlmod{shaded yellow boxes} 
-and new rules highlighted by \hlnew{shaded purple boxes}. Also notice that the sucessor and 
-the refinement relations were simply dropped for being unecessary by now.
+and new rules highlighted by \hlnew{shaded purple boxes}. Also notice that the successor and 
+the refinement relations were simply dropped for being unnecessary by now.
 
 \newcommand{\cdecl}[6]{\texttt{class #1 extends #2 \{\={#3} \={#4}; #5 \={#6}\}}}
 \newcommand{\crefine}[6]{\texttt{refines class #1 \{\={#2} \={#3}; #4 \={#5} \={#6}\}}}
@@ -198,7 +198,7 @@ about these new lookup functions which we name $fields_R$, $mtype_R$ and $mbody_
 $fields_R$ simply retrieves the fields of all refinements up to that point in the refinement chain.
 
 $mtype_R$ and $mbody_R$ tries to find the last introduction to a method, and retrieves its type or body.
-Notice that these two definitions greatly differs from \gls{FFJ} to \gls{FFJ+}. In \gls{FFJ} $mtype$ would
+These two definitions greatly differs from \gls{FFJ} to \gls{FFJ+}. In \gls{FFJ} $mtype$ would
 retrieve the typing of the first method introduction, whereas in \gls{FFJ+} it will retrieve the
 type of the last method refinement, and only later we define the rules for guarantying that the
 refinement always has the same type of the method declaration. This was made to greatly simplify
@@ -462,20 +462,107 @@ it must have the same name. If a method refinement is declared in a method refin
 this rule guarantess that it will override the superclass accordingly.
 
 \section{Typing and Reduction}
-The typing and computation rules for expressions are elided since are the same as \gls{FJ}. An environment
-$\Gamma$ is a finite mapping from variables to types, written $\bar{c}:\bar{C}$.
+The typing and computation rules for expressions are listed in \cref{exptyping} and \cref{expcomput}
+respectively. They are the same as \gls{FJ}. 
+An environment $\Gamma$ is a finite mapping from variables to types, written $\bar{c}:\bar{C}$.
 The typing judgment for expressions has the form $\Gamma \vdash e: C$, read ``in
 the environment $\Gamma$, expression $e$ has type $C$''.
+
+\begin{table}[h!]
+	\centering
+	\def\arraystretch{3}
+	\begin{tabular}{cr}
+		$\Gamma \vdash x:\Gamma(x)$& (T-Var)\\
+
+		\inferrule{\Gamma \vdash e_{0}:C_{0}\qquad fields~(C_{0})=\bar{C}\
+		\bar{f}}
+		{\Gamma \vdash e_{0}.f_{i}:C_{i}} & (T-Field)\\
+
+		\inferrule{\Gamma \vdash e_{0}:C_{0}\qquad
+			mtypes~(m,~C_{0})=\bar{D}\rightarrow C\qquad \Gamma \vdash
+		\bar{e} : \bar{C} \qquad \bar{C}~<:~\bar{D}}
+		{\Gamma \vdash e_{0}.m(\bar{e}):C} & (T-Invk)\\
+
+		\inferrule{fields(C)=\bar{D}\ \bar{f}\qquad \Gamma \vdash
+		\bar{e}:\bar{C} \qquad \bar{C}~<:~\bar{D}}
+		{\Gamma \vdash new\ C(\bar{e}):C} & (T-New)\\
+
+		\inferrule{\Gamma \vdash e_{0}:D \qquad D~<:~C}
+		{\Gamma \vdash (C)~e_{0}: C} & (T-UCast)\\
+
+		\inferrule{\Gamma \vdash e_{0}:D\qquad C~<:~D \qquad C \neq D}
+		{\Gamma \vdash (C)~e_{0}:C} & (T-DCast)\\
+
+		\inferrule{\Gamma \vdash e_{0}:D\qquad C~\nless :~D \qquad D~\nless:~C 
+		\qquad stupid\ warning}
+		{\Gamma \vdash (C)~e_0:C} & (T-SCast)\\
+
+	\end{tabular}
+    \quad
+    \label{exptyping}
+    \caption{Expression typing}
+\end{table}
+
 
 The reduction relation is of the form $e \rightarrow e'$, read ``expression
 $e$ reduces to expression $e'$ in one step'', We write $\rightarrow *$ for the
 reflexive and transitive closure of $\rightarrow$.
+
+\begin{table}[h!]
+	\centering
+	\def\arraystretch{3}
+	\begin{tabular}{cr}
+		\inferrule{fields~(C) = \bar{C} \bar{f}}
+        {(new\ C(\bar{e})).f_i \rightarrow e_i} & (R-Field) \\
+
+		\inferrule{mbody~(m, C) = \bar{x}.e_0}
+        {(new\ C~(\bar{e})).m~(\bar{d}) \rightarrow[\bar{d}/\bar{x}, new\ C~(\bar{e})/this]e_0} & (R-Invk)\\
+		\inferrule{C<:D}
+        {(D)(new\ C~(\bar{e})) \rightarrow new\ C~(\bar{e})} & (R-Cast)\\
+	\end{tabular}
+    \quad
+    \label{expcomput}
+    \caption{Expression computation}
+\end{table}
 
 There are three reduction rules, one for field access, one for method invocation, and one for casting.
 We write $[\bar{d}=\bar{x}, e=y]e_0$ for
 the result of replacing $x_1$ by $d_1$, $x_2$ by $d_2, \dots, x_n$ by $d_n$, and $y$ by $e$ in
 the expression $e_0$.
 
-Notice that with the absence of side effects, there is no need of stack
+With the absence of side effects, there is no need of stack
 or heap for variable binding. 
 
+In \Cref{table:eval-ctx} we define the evaluation context.
+The idea of an evaluation context is to represent where the next reduction will
+be applied. This makes easy the job to represent which kinds of expressions
+are expected to be stuck and which are not in our progress theorem.
+That being said, evaluation contexts roughly follows the same syntax as the syntax of
+the expressions, taking the necessary care to preserve the order of evaluation
+of the language. Since \gls{FJ} and \gls{FFJ+} are non-deterministic, no much
+care is needed. 
+
+Here our evaluation context denotes a reduction happening:
+\begin{itemize}
+    \item "right here", represented by $\square$;
+    \item in the expression of a field access;
+    \item in the object of a method invocation;
+    \item in \emph{some} of the arguments of a method invocation;
+    \item in the expression being cast;
+    \item in \emph{some} of the arguments of an object creation.
+\end{itemize}
+
+\begin{table}[h!]
+    \centering
+    $E$ ::= $\square$ | $E.f_i$ | $E.m(\bar{e})$ | $e.m(\bar{e_l}, E, \bar{e_r})$
+    | $(C)~E$ | $new~C(\bar{e_l}, E, \bar{e_r})$
+    \label{table:eval-ctx}
+    \caption{Evaluation context}
+\end{table}
+
+\section{Properties}
+In this transition from \gls{FJ} to \gls{FFJ+} a few additional lemmas were needed.
+They are only related to the lookup functions, since \gls{FFJ+} does not alter
+the typing rules or the reduction rules. This means that the main safety theorems
+presented by Igarashi et al \cite{igarashi_featherweight_2001} goes 
+perfectly unchanged.
