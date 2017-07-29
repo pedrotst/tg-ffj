@@ -566,3 +566,48 @@ They are only related to the lookup functions, since \gls{FFJ+} does not alter
 the typing rules or the reduction rules. This means that the main safety theorems
 presented by Igarashi et al \cite{igarashi_featherweight_2001} goes 
 perfectly unchanged.
+
+\begin{theorem}[Typed method has body]
+    If $mtype(m, C) = B \rightarrow \overline{B}$ \\
+    then $\exists \bar{x}~\exists e$ such that
+        $mbody(m, C) = \bar{x}. e$
+\end{theorem}
+
+\begin{theorem}[Typed method has body - Refinement]
+    If $mtype_R(m, R) = \mathtt{B} \rightarrow \mathtt{Bs}$ \\
+    then $\exists \bar{x}~\exists e$ such that
+        $mbody_R(m, R) = \bar{x}. e$
+\end{theorem}
+
+\begin{theorem}[Body method has type - Refinement]
+    If $mbody_R(m, R) = \bar{x} . e $ \\
+    then $\exists \overline{B}~\exists B$ such that
+        $mtype_R(m, R) = \mathtt{B} \rightarrow \mathtt{Bs}$
+\end{theorem}
+
+\begin{theorem}[Subtype respects method types]
+    If \cdecl{C}{D}{C}{f}{K}{M} \\
+    then $mtype(m, C) = mtype(m, D)$        
+\end{theorem}
+
+\begin{theorem}[Refinement respects method types]
+    If \cdecl{C}{D}{C}{f}{K}{M} \\
+        then $\forall feat,~mtype_R(m, C@feat) = mtype(m, D)$        
+\end{theorem}
+
+\begin{theorem}[A1.4 - Method Body is Typable]
+    If \mtype{m}{C} = $\bar{D} \rightarrow D$ \\
+            and \mbody{m}{C} = $\bar{x}.e$\\
+            then $\exists C <: D, \exists C_0 <: D_0,~this: D, \bar{x}: \bar{D}\vdash e: C_0$
+\end{theorem}
+
+
+
+\begin{theorem}[Method Body is Typable - Refinement]
+    If \mtyper{m}{C@feat} = $\bar{D} \rightarrow D$ \\
+            and \mbodyr{m}{C@feat} = $\bar{x}.e$\\
+            then $\exists C <: D, \exists C_0 <: D_0,~this: D, \bar{x}: \bar{D}\vdash e: C_0$
+\end{theorem}
+
+
+
