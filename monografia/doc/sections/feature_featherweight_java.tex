@@ -574,15 +574,16 @@ and preservation theorems.
 These lemmas follows the idea of extending the original lemmas stated for
 \gls{FJ} with the \gls{FFJ+} definitions, specially for the lookup functions.
 
-\begin{lemma}[Typed method has body]
+\begin{lemma}[Typed method has body]\label{lemma:typed-method-body}
     If $mtype(m, C) = B \rightarrow \overline{B}$ \\
     then $\exists \bar{x}~\exists e$ such that
         $mbody(m, C) = \bar{x}. e$
 \end{lemma}
 
-Firstly we had Typed method has body, which states that it is possible to
+Firstly, in \gls{FJ} we had \cref{lemma:typed-method-body}, 
+which states that it is possible to
 fetch the body of a function given the $mtype$ function. Since $mtype$ and
-and $mbody$ are symmetrical on their definition, this is straightforward.
+$mbody$ are symmetrical on their definition, this is straightforward.
 
 Now it is needed to extend that lemma with $mtype_R$ and $mbody_R$, and since
 they were also implemented to be symmetrical this is also straightforward.
@@ -602,7 +603,7 @@ $mtype_R$ since it is used the negation $mtype_R$ on the definitions.
 \end{lemma}
 
 Next it is needed to show that method signatures respects the signatures
-at the superclasses. Which is also straightfoward by the definition of
+at the superclasses. Which is also straightforward by the definition of
 $override$ and $override_R$. In the case of \cref{lemma:ref-type} it 
 is also necessary an inner induction on $override_R$.
 
@@ -617,21 +618,19 @@ is also necessary an inner induction on $override_R$.
 \end{lemma}
 
 The last two lemmas are about type checking the body of a function
-given the return of $mtype$ or $mtype_$ and $mbody$ or $mbody_R$.
+given the return of $mtype$ or $mtype_R$ and $mbody$ or $mbody_R$.
 
-\begin{lemma}[A1.4 - Method Body is Typable]
+\begin{lemma}[A1.4 - Method body is typable]
     If \mtype{m}{C} = $\bar{D} \rightarrow D$ \\
-            and \mbody{m}{C} = $\bar{x}.e$\\
+            and \mbody{m}{C} = $\bar{x}.e$,
             then $\exists C <: D, \exists C_0 <: D_0,~this: D, \bar{x}: \bar{D}\vdash e: C_0$
 \end{lemma}
 
-\begin{lemma}[Method Body is Typable - Refinement]
+\begin{lemma}[Method body is typable - Refinement]
     If \mtyper{m}{C@feat} = $\bar{D} \rightarrow D$ \\
-            and \mbodyr{m}{C@feat} = $\bar{x}.e$\\
+            and \mbodyr{m}{C@feat} = $\bar{x}.e$, 
             then $\exists C <: D, \exists C_0 <: D_0,~this: D, \bar{x}: \bar{D}\vdash e: C_0$
 \end{lemma}
-
-And finally we state The Progress and Preservation theorems.
 
 \begin{theorem}[Preservation]
     If $\Gamma \vdash e : C$ and $e \rightarrow e'$,
