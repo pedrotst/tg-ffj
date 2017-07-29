@@ -609,5 +609,15 @@ perfectly unchanged.
             then $\exists C <: D, \exists C_0 <: D_0,~this: D, \bar{x}: \bar{D}\vdash e: C_0$
 \end{theorem}
 
+\begin{theorem}[Preservation]
+    If $\Gamma \vdash e : C$ and $e \rightarrow e'$,
+    then $\Gamma \vdash e': C'$ for some $C' <: C$.
+\end{theorem}
+
+\begin{theorem}[Progress]
+    Suppose $e$ is closed, well-typed normal form.\\
+    Then either (1) $e$ is a value, or (2) for some evaluation context $E$, we can
+    express $e$ as $e = E[(C)(new D(\bar{e}))]$, with $D \nless: C$.
+\end{theorem}
 
 
