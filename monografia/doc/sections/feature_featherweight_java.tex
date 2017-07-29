@@ -571,6 +571,8 @@ Below we list a few of the most important lemmas. The definition \gls{FFJ+}
 was well thought so they are all straightforward. And finally the progress
 and preservation theorems.
 
+Only \cref{lemma:ref-type} is interesting enough for the complete proof.
+
 These lemmas follows the idea of extending the original lemmas stated for
 \gls{FJ} with the \gls{FFJ+} definitions, specially for the lookup functions.
 
@@ -604,7 +606,7 @@ $mtype_R$ since it is used the negation $mtype_R$ on the definitions.
 
 Next it is needed to show that method signatures respects the signatures
 at the superclasses. Which is also straightforward by the definition of
-$override$ and $override_R$. In the case of \cref{lemma:ref-type} it 
+$override$ and $override_R$. We provide the proof of \cref{lemma:ref-type} it 
 is also necessary an inner induction on $override_R$.
 
 \begin{lemma}[Subtype respects method types]
@@ -616,6 +618,23 @@ is also necessary an inner induction on $override_R$.
     If \cdecl{C}{D}{C}{f}{K}{M} \\
         then $\forall feat,~mtype_R(m, C@feat) = mtype(m, D)$        
 \end{lemma}
+\begin{proof}
+    By induction on $mtype_R$. Let $mtype(m,D)=Ds~\rightarrow~D_0$ and
+    $mtype_R(m,R)~=~Ds'~\rightarrow~D_0'$.
+    \begin{enumerate}
+        \item Case $m$ is defined on the method declarations of $C@feat$, since $m$ declaration is well formed we have $override(m, D, Ds' \rightarrow D_0')$.
+        \item Case $m$ is defined on the method refinements of $C@feat$,
+            Since $C@feat$ is well formed we have $override_R(m, (C@feat), Ds \rightarrow D0)$,
+            we proceed by induction on the structure of $override_R$.
+        \begin{enumerate}
+            \item Case $C@feat$ is the first refinement we have $mtype(m, C) = mtype_R(m, C@feat)$, by well formed of method in a class (\cref{method-typing}) we have $override(m,~C,~Ds~'\rightarrow~D_0')$
+            \item Case $C@feat$ has a predecessor $P$, and $P$ declares $m$
+                by well formed of method in a refinement (\cref{method-typing}) we have $override(m, P, Ds' \rightarrow D_0')$
+            \item Case $C@feat$ has a predecessor $P$ but $P$ does not declare $m$ the thesis follows trivially by the induction hypothesis.
+        \end{enumerate}
+        \item Case $C@feat$ does not declare $m$ the thesis follows trivially by the induction hypothesis.
+    \end{enumerate}
+\end{proof}
 
 The last two lemmas are about type checking the body of a function
 given the return of $mtype$ or $mtype_R$ and $mbody$ or $mbody_R$.
