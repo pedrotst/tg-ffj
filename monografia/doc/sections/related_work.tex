@@ -1,1 +1,48 @@
-\chapter{Related Work}\label{seq:related}
+\section{Related Work}\label{seq:related}
+
+Several techniques have been proposed to implement
+\emph{high configurable systems}. Some of
+them are based on source code annotations, such as
+the \emph{well-known} C preprocessor~\cite{stallman:cpp} and Color IDE~\cite{kastner:icse2008}. Others
+rely on compositional approaches, such as
+Feature-Oriented Programming~\cite{batory-tse2004,batory_feature-oriented_2004},
+Delta-Oriented Programming~\cite{schaefer_delta-oriented_2010}, 
+and Aspect Oriented Programming~\cite{kiczales:ecoop2001,alves:splc2005}.
+Nevertheless, it is important to
+note that, in high configurable systems (such as software
+product lines), testing and formal verification are considered
+challenging tasks, in particular because, in this context,
+these activities must deal with a potential huge number of
+products and also consider not only source code artifacts,
+but also high-level variability assets (such as feature and
+configuration models).
+
+In this scenario, several researchers have explored
+the use of core-calculus for languages that
+support the development of high configurable systems,
+including Imperative Featherweight Delta Java~\cite{schaefer:aosd2011}, Feature
+Featherweight Java~\cite{apel_feature_2008}, and Lightweight Feature Java~\cite{delaware:fse-2009}.
+To the best of our knowledge, the work of Delaware
+et al. was the first to mechanize a core calculus
+of a language designed for high configurable systems (in
+this case, Lightweight Feature Java)~\cite{delaware:fse-2009}. Differently, here in
+this paper we explored the \emph{first mechanization of \acf{FFJ}}
+which, according to Apel et al., is a calculus that
+addresses the essencials aspects of several
+existing implementations of feature-oriented programming
+languages, including FST Composer and AHEAD~\cite{apel_feature_2008}. 
+
+For the purpose of evolving our \ac{FJ} mechanization
+to \ac{FFJ}, we could have explored some of the
+design decisions discussed in previous and elaborate works, such as
+\emph{Product Line of Theorems}~\cite{delaware:oopsla2011},
+\emph{Data Types \`{a} la Carte}~\cite{swierstra_2008},
+and \emph{MetaTheory \'{a} la Carte}~\cite{delaware:popl2013}.
+However, we faced with
+an engineering trade-off here: although the use of such an
+infrastructure could improve the reuse between \ac{FJ} and \ac{FFJ}
+implementations in Coq, the accidental complexity involved in
+these approaches will actually reduce the comprehensibility of our
+specifications and probably delay the conclusion of our
+implementations. Therefore, in our opinion, there is still a
+gap to guarantee proof extensibility of type systems. 

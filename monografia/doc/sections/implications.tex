@@ -1,1 +1,49 @@
-\chapter{Implications}\label{seq:impl}
+\section{Discussion}\label{seq:impl}
+
+Our experience of formalizing \ac{FFJ} 
+using Coq enabled us to 
+not only better understand \ac{FFJ}, but also to improve and 
+simplify its original specification and \emph{handwriting 
+proofs}. For instance, our version of \ac{FFJ} expects 
+explicit annotations to relate class refinements to the 
+corresponding features---this is similar to the 
+approach discussed by Delaware at al.~\cite{delaware:fse-2009}, 
+where features appear as the modular unities of compositions. 
+Here, the idea of making include in the syntax the annotation 
+of class refinements with its features is made to provide a trivial way to 
+reference the refinement, simplifying the lookup functions.
+
+Actually, our process started by formalizing \ac{FJ}, 
+and than evolving this formalization towards \ac{FFJ}. 
+To make our language implementation and proofs more clear, 
+we decided not to use some advanced language features 
+and recent idioms of Coq (such as those discussed in \emph{Meta-Theory \`{a} la Carte}~\cite{}). 
+For this reason, and considering that data types in Coq are not extensible, 
+we have to \emph{copy and paste} our original \ac{FJ} definition 
+to our \ac{FFJ} Coq source code repository. Our original \ac{FJ} 
+definition includes 22 inductive definitions, 31 lemmas, and 
+19 tactics. Instead, our \ac{FFJ} specification includes 
+39 inductive definitions, 61 lemmas, and 34 new tactics. Due to our 
+design decisions detailed in the previous sections, 
+we were able to preserve all \ac{FJ} lemmas in \ac{FFJ}---though 
+we had to change the proofs related to four of the original \ac{FJ} 
+lemmas. That is, even with the naive approach for reusing 
+definitions, our decisions related to \ac{FFJ} 
+allowed us to preserve several definitions present 
+in our \ac{FJ} specification. 
+
+We believe that our \ac{FFJ} specification might 
+help other researchers to verify software product 
+line (SPL) properties considering not only high level 
+variability artifacts of a SPL (such as feature and configuration 
+models), but also a core calculus of programming 
+languages (such as \ac{FFJ}). For instance, 
+several works discuss the \emph{safe evolution 
+of product lines}~\cite{}, assuming that the asset 
+base (e.g., source code) builds upon a 
+language having well-formedness and 
+refinements rules. In this paper, we discussed and implemented a 
+notion of well-formedness rules for \ac{FFJ}, postponing 
+the meaning of \ac{FFJ} refinements to a future work.  
+
+ 
