@@ -43,12 +43,13 @@ file systems~\cite{arkoudas2004verifying, amani2015specifying} and languages~\ci
 The process of scrutinizing \gls{FFJ} and defining \textit{unambiguously} its semantics in \texttt{Coq} 
 lead us to some language specification and implementation improvements. The biggest change was to review and
 simplify the lookup functions of the refinement table.
-The implementations of \gls{FJ} and \gls{FFJ} can both be found at github\footnote{\url{https://github.com/hephaestus-pl/coqfj}}\footnote{\url{https://github.com/hephaestus-pl/coqffj}}.
 Henceforth, we refer this proposed calculus as \gls{FFJ+} to distinguish it when comparing our implementation to the original \gls{FFJ} design.
 Altogether the improvements proposed in \gls{FFJ+} makes the transition more natural between \gls{FJ} and \gls{FFJ}, 
 simplifying the auxiliary functions used in the language specification as well as the type safety proofs and lemmas. 
 This allows defining \gls{FFJ+} with incremental changes to \gls{FJ} syntax and semantics, 
 and consequently, incremental changes to proofs, leading to a clearer and simpler specification of \textit{FFJ}.
+The implementations of \gls{FJ} and \gls{FFJ} can both be found at github\footnote{\url{https://github.com/hephaestus-pl/coqfj}}\footnote{\url{https://github.com/hephaestus-pl/coqffj}}.
+
 
 The main goal of this work is to present a novel mechanization of a \gls{FOP} language. In particular, the mechanization of \gls{FFJ+}.
 Hence we can summarize the main contribution of this work as follows:
