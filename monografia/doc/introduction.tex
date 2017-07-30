@@ -1,5 +1,5 @@
 \chapter{Introduction}
-\textit{\gls{FOP}} \cite{prehofer_feature-oriented_1997} is a design methodology and tools for program synthesis \cite{batory_tutorial_2003}.
+\gls{FOP} \cite{prehofer_feature-oriented_1997} is a design methodology and tools for program synthesis \cite{batory_tutorial_2003}.
 It aims at the modularization of software systems in terms of features. A \textit{feature}
 implements a stakeholder's requirement and is typically an increment in program functionality.
 When added to a software system, a feature introduce new structures, such as classes and methods,
@@ -18,17 +18,18 @@ the means for cheap customization. \gls{SPL} aims to provide customized software
 \gls{FOP} concepts. At the section \ref{seq:fop-ex} we shall use \gls{SPL} to explain the main \gls{FOP} concepts.
 
 Several attempts to formalize the type system of \gls{FOP} languages have been made. %Citar todas formalizações de delta oriented programmaning
-For instance,  \textit{\gls{FFJ}} \cite{apel_feature_2008} is a proposed type system for \gls{FOP} languages and tools, 
-which is developed on top of \textit{\gls{FJ}}~\cite{igarashi_featherweight_2001}
+For instance,  \gls{FFJ} \cite{apel_feature_2008} is a proposed type system for \gls{FOP} languages and tools, 
+which is developed on top of \gls{FJ}~\cite{igarashi_featherweight_2001}
 to provide a simple syntax and semantics conforming with common \gls{FOP} languages, 
 incorporating constructs for feature composition. %Falar de alguma formalizacao de DOP.
 
 Nevertheless, very few effort was made to mechanize a \gls{FOP} language. In matter of fact, only one
-\gls{FOP} language was implemented with a proof assistant to date, it is known as LFJ~\cite{delaware2009machine}
-Mechanizing a language is interesting because it makes the proofs even more reliable than peer review.
+\gls{FOP} language was implemented with a proof assistant to date, that is \gls{LFJ}~\cite{delaware2009machine}.
+One of the reasons that make mechanizing a language interesting is because it makes the proofs more reliable than peer review.
 Take for an instance the Perko Pairs~\cite{little1900xxx}. 
 They were listed by C.N Little as different knots in 1885, and only almost a century latter, 
-in 1974 Ken Perko discovered~\cite{rolfsen1976knots} them to actually be the same knot!
+in 1974 Ken Perko discovered~\cite{rolfsen1976knots} them to actually be the same knot! In the history of mathematics there
+are several similar examples.
 
 The idea behind mechanization is to check these proofs with the aid of a computer, reducing significantly the risk of errors, while 
 taking full use of automation for the tedious or straightforward steps of the proof. As the system may grow, the mechanization makes
