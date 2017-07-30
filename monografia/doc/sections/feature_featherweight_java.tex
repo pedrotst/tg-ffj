@@ -236,7 +236,7 @@ functions follows the same structure the proof is straightforward.
         \\
 	\end{tabular}
     \label{table:field}
-    \caption{Field lookup}
+    \caption{Field Lookup}
 \end{table}
 
 \newcommand{\mtype}[2]{\ensuremath{mtype~(\texttt{#1},\texttt{#2})}}
@@ -292,7 +292,7 @@ functions follows the same structure the proof is straightforward.
     \quad\\
     \label{mtypelookup}
     \vspace*{5pt}
-    \caption{Method type lookup}
+    \caption{Method Type Lookup}
 \end{table}
 
 \newcommand{\mbody}[2]{\ensuremath{mbody~(\texttt{#1},\texttt{#2})}}
@@ -348,7 +348,7 @@ functions follows the same structure the proof is straightforward.
     \quad\\
     \label{mbodylookup}
     \vspace*{5pt}
-    \caption{Method Body lookup}
+    \caption{Method Body Lookup}
 \end{table}
 
 Override function in \Cref{table:override} inductively guaranties that a method 
@@ -431,7 +431,7 @@ not yet declared earlier in the refinement chain.
 
     \end{tabular}
 \label{method-typing}
-\caption{Method typing in \gls{FFJ+}}
+\caption{Method Typing in \gls{FFJ+}}
 \end{table}
 
 \begin{table}[h!]
@@ -447,7 +447,7 @@ not yet declared earlier in the refinement chain.
             {\mathtt{\crefine{R}{C}{f}{KR}{M}{MR}~OK}}\\\\
     \end{tabular}
 \label{typing2}
-\caption{Class and refinement typing in \gls{FFJ+}}
+\caption{Class and Refinement Typing in \gls{FFJ+}}
 \label{table:classtyping}
 \end{table}
 
@@ -500,7 +500,7 @@ the environment $\Gamma$, expression $e$ has type $C$''.
 	\end{tabular}
     \quad
     \label{exptyping}
-    \caption{Expression typing}
+    \caption{Expression Typing}
 \end{table}
 
 
@@ -522,7 +522,7 @@ reflexive and transitive closure of $\rightarrow$.
 	\end{tabular}
     \quad
     \label{expcomput}
-    \caption{Expression computation}
+    \caption{Expression Computation}
 \end{table}
 
 There are three reduction rules, one for field access, one for method invocation, and one for casting.
@@ -558,7 +558,7 @@ Here our evaluation context denotes a reduction happening:
     $E$ ::= $\square$ | $E.f_i$ | $E.m(\bar{e})$ | $e.m(\bar{e_l}, E, \bar{e_r})$
     | $(C)~E$ | $new~C(\bar{e_l}, E, \bar{e_r})$
     \label{table:eval-ctx}
-    \caption{Evaluation context}
+    \caption{Evaluation Context}
 \end{table}
 
 \section{Properties}
