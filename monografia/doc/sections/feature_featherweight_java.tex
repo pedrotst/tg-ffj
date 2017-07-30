@@ -544,12 +544,12 @@ care is needed.
 
 Here our evaluation context denotes a reduction happening:
 \begin{itemize}
-    \item "right here", represented by $\square$;
-    \item in the expression of a field access;
-    \item in the object of a method invocation;
-    \item in \emph{some} of the arguments of a method invocation;
-    \item in the expression being cast;
-    \item in \emph{some} of the arguments of an object creation.
+    \item "Right here", represented by $\square$;
+    \item In the expression of a field access;
+    \item In the object of a method invocation;
+    \item In \emph{some} of the arguments of a method invocation;
+    \item In the expression being cast;
+    \item In \emph{some} of the arguments of an object creation.
 \end{itemize}
 
 \begin{table}[h!]
@@ -590,7 +590,7 @@ $mbody$ are symmetrical on their definition, this is straightforward.
 Now it is needed to extend that lemma with $mtype_R$ and $mbody_R$, and since
 they were also implemented to be symmetrical this is also straightforward.
 However it is also necessary to prove its converse, i.e. $mbody_R$ implies
-$mtype_R$ since it is used the negation $mtype_R$ on the definitions.
+$mtype_R$ since it is used the negation of $mtype_R$ on the definitions.
 
 \begin{lemma}[Typed method has body - Refinement]
     If $mtype_R(m, R) = \mathtt{B} \rightarrow \mathtt{Bs}$ \\
@@ -655,7 +655,7 @@ given the return of $mtype$ or $mtype_R$ and $mbody$ or $mbody_R$.
     If $\Gamma \vdash e : C$ and $e \rightarrow e'$,
     then $\Gamma \vdash e': C'$ for some $C' <: C$.
 \end{theorem}
-For the proof Refer to \cite{igarashi_featherweight_2001}.
+For the proof refer to \cite{igarashi_featherweight_2001}.
 
 \begin{theorem}[Progress]
     Suppose $e$ is closed, well-typed normal form.\\

@@ -1,2 +1,52 @@
-\chapter{Conclusion}\label{seq:conclusion}
+\chapter{Conclusion}\label{seq:impl}
 
+Our experience of formalizing \gls{FFJ} 
+using Coq enabled us to 
+not only better understand \gls{FFJ}, but also to improve and 
+simplify its original specification and \emph{handwriting 
+proofs}. For instance, our version of \gls{FFJ} expects 
+explicit annotations to relate class refinements to the 
+corresponding features---this is similar to the 
+approach discussed by Delaware at al.~\cite{delaware:fse-2009}, 
+where features appear as the modular unities of compositions. 
+Here, the idea of making include in the syntax the annotation 
+of class refinements with its features is made to provide a trivial way to 
+reference the refinement, simplifying the lookup functions.
+
+Actually, our process started by formalizing \gls{FJ}, 
+and than evolving this formalization towards \gls{FFJ}. 
+To make our language implementation and proofs more clear, 
+we decided not to use some advanced language features 
+and recent idioms of Coq (such as those discussed in \emph{Meta-theory \`{a} la Carte}~\cite{delaware:popl2013}). 
+For this reason, and considering that data types in Coq are not extensible, 
+we have to \emph{copy and paste} our original \gls{FJ} definition 
+to our \gls{FFJ} Coq source code repository. Our original \gls{FJ} 
+definition includes 22 inductive definitions, 31 lemmas, and 
+19 tactics. Instead, our \gls{FFJ} specification includes 
+39 inductive definitions, 61 lemmas, and 34 new tactics. Due to our 
+design decisions detailed in the previous sections, 
+we were able to preserve all \gls{FJ} lemmas in \gls{FFJ}---though 
+we had to change the proofs related to four of the original \gls{FJ} 
+lemmas. That is, even with the naive approach for reusing 
+definitions, our decisions related to \gls{FFJ} 
+allowed us to preserve several definitions present 
+in our \gls{FJ} specification. 
+
+We believe that our \gls{FFJ} specification might 
+help other researchers to verify software product 
+line (SPL) properties considering not only high level 
+variability artifacts of a SPL (such as feature and configuration 
+models), but also a core calculus of programming 
+languages (such as \gls{FFJ}). For instance, 
+several works discuss the \emph{safe evolution 
+of product lines}~\cite{}, assuming that the asset 
+base (e.g., source code) builds upon a 
+language having well-formedness and 
+refinements rules.  
+
+As future work to continue the mechanization of \gls{FFJ} discussed in 
+Type Safety for Feature-Oriented Product Lines~\cite{}, which culminates
+in the demonstration that \emph{every} valid program of a well-typed product
+line is well-typed. It would also be interesting and worthwhile to enhance our
+mechanization of \gls{FFJ+} to the concept of deltas, which in a nutshell,
+would be the removal of features.
