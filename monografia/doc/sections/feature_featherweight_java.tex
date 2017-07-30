@@ -462,7 +462,7 @@ it must have the same name. If a method refinement is declared in a method refin
 this rule guarantess that it will override the superclass accordingly.
 
 \section{Typing and Reduction}
-The typing and computation rules for expressions are listed in \cref{exptyping} and \cref{expcomput}
+The typing and computation rules for expressions are listed in \cref{exptyping,expcomput}
 respectively. They are the same as \gls{FJ}. 
 An environment $\Gamma$ is a finite mapping from variables to types, written $\bar{c}:\bar{C}$.
 The typing judgment for expressions has the form $\Gamma \vdash e: C$, read ``in
@@ -534,8 +534,9 @@ With the absence of side effects, there is no need of stack
 or heap for variable binding. 
 
 In \Cref{table:eval-ctx} we define the evaluation context.
-The idea of an evaluation context is to represent where the next reduction will
-be applied. This makes easy the job to represent which kinds of expressions
+An evaluation context is to represent a term with a hole in it. This way
+there exists a plug function that will insert a term in that context.
+This makes easy the job to represent which kinds of expressions
 are expected to be stuck and which are not in our progress theorem.
 That being said, evaluation contexts roughly follows the same syntax as the syntax of
 the expressions, taking the necessary care to preserve the order of evaluation

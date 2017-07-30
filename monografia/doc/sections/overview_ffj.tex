@@ -64,7 +64,7 @@ In \Cref{lst:expr-ct,lst:expr-rt} we revisit the EPL example from
 \Cref{seq:fop-ex} this time using \gls{FFJ+} instead of AHEAD.
 
 \begin{lstlisting}[language=Java, frame=single, numbers=left, basicstyle=\footnotesize,
-    label={lst:expr-ct}, caption={EPL Class Table}]
+    label={lst:expr-ct}, caption={EPL Class Table}, captionpos=b]
 class Expr extends Object {
     Expr() { super(); }
 }
@@ -81,7 +81,7 @@ class Sub extends Expr {
 \end{lstlisting}
 
 \begin{lstlisting}[language=Java, frame=single, numbers=left, basicstyle=\footnotesize,
-    label={lst:expr-rt}, caption={EPL Refinement Table}]
+    label={lst:expr-rt}, caption={EPL Refinement Table}, captionpos=b]
 refines class Expr@Eval {
     refines Expr() { original(); }
     int eval() {return 0;}
