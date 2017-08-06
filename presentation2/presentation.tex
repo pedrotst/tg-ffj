@@ -53,7 +53,7 @@
 	Universidade de Brasilia 
 }
 
-\date{August 08, 2017}
+\date{08 de Agosto, 2017}
 
 \subject{Formalização de Linguagens de Programação}
 
@@ -69,25 +69,40 @@
 		%\tableofcontents
 	%\end{frame}
 
-    \begin{frame}{Objetivo}
-        \centering
-        {\only<2->{\color{red}}Mecanizar} {\only<3->{\color{red}}Feature} Featherweight Java 
-        \\
-        % \only<4->{Por que isso é interessante?}
+    \begin{frame}{Mecanização}
+        \begin{itemize}
+            \item Mecanizar significa provar teoremas com a assistência do computador.
+                \begin{itemize}
+                    \item<2-> Automaticamente;
+                    \item<3-> Iterativamente.
+                \end{itemize}
+        \end{itemize}
     \end{frame}
-    
+
+    \begin{frame}{Provadores Iterativos de Teoremas}
+        \includegraphics[width=\textwidth, height=\textheight]{itp_logos}
+    \end{frame}
+
     \begin{frame}{Por que mecanizar?}
         \begin{itemize}
-            \item Aplicações de criticamente seguras: Bugs são inaceitáveis
+            \item Aplicações de segurança critica: Bugs são inaceitáveis
             \begin{itemize}
                 \item Controladores de Avião
                 \item Equipamentos Médicos
                 \item Carros
             \end{itemize}
-        \item Bugs encontrados tardiamente são caros
         \item A medida que o software e o hardware crescem dificulta encontrar
             bugs através de testes.
+        \item Bugs encontrados tardiamente são caros.
         \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Bugs são caros}
+        \centering
+            Custo Relativo para Corrigir Defeitos Encontrados em
+            Diferentes Fases do Desenvolvimento de Software.\footnote{Fonte: The Economic Impacts of Inadequate Infraestructure for Software Testing}\\
+
+            \includegraphics[width=\textwidth]{custo_bug}
     \end{frame}
 
     \begin{frame}{O que é feature?}
@@ -104,6 +119,11 @@
         \includegraphics[width=\textwidth]{spl-ex}
     \end{frame}
 
+    \begin{frame}{Objetivo}
+        \centering
+        Mecanizar Feature Featherweight Java em Coq
+    \end{frame}
+
     \section{Featherweight Java}
     \begin{frame}{Featherweight Java}{Sintaxe Abstrata}
         \begin{table}[!ht]
@@ -113,8 +133,6 @@
                 \quad \cdecl{C}{D}{C}{f}{K}{M} \\  \\
                 \texttt{K}~::=  \hfill\textit{constructor declarations:}\\
                 \quad \texttt{C(\={C}~\={f})\{super(\={f});~this.\={f}=\={f};\}}\\\\
-                \texttt{KD}~::= \hfill\textit{constructor refinements:} \\
-                \quad \texttt{refines~C(\={E}~\={h}, \={C} \={f})\{original(\={f}); this.\={f}=\={f};\}} \\\\
                 \texttt{M}~::= \hfill\textit{method declarations:}\\
                 \quad \mdecl{C}{m}{C}{x}{e} \\ \\
             \end{tabular}
@@ -154,7 +172,7 @@
     \end{frame}
 
 
-    \begin{frame}{Featherweight Java}{Relação de Subtipo}
+    \begin{frame}{\only<2->{Feature} Featherweight Java}{\only<1>{Relação de Subtipo} \only<2->{Refinement Chain}}
         \centering
 
         \begin{tikzpicture}
@@ -336,85 +354,142 @@
         \end{table}
     \end{frame}
 
-    \begin{frame}{Appendix}{Evaluation Context}
+    \begin{frame}{Tipagem}
         \centering
-        \begin{table}[h]
-            $E$ ::= $\square$ | $E.f_i$ | $E.m(\overline{e})$ | $e.m(\overline{e_l}, E, \overline{e_r})$
-            | $(C)~E$ | $new~C(\overline{e_l}, E, \overline{e_r})$
-            \label{table:eval-ctx}
-            \caption{Evaluation Context}
-        \end{table}         
+        \only<1>{$\Gamma \vdash e: C$}
+        \only<2->{$a: A, b: B, ..., x: X \vdash e: C$}
+    \end{frame}
+
+	\begin{frame}{Regras de Tipagem}
+		\begin{table}[h!]
+			\centering
+			\def\arraystretch{3}
+			\adjustbox{max height=\dimexpr\textheight-5.5cm\relax, max width=\textwidth}{
+			\begin{tabular}{cr}
+				$\Gamma \vdash x:\Gamma(x)$& (T-Var)\\
+				
+				\inferrule{\Gamma \vdash e_{0}:C_{0}\qquad fields~(C_{0})=\overline{C}\
+					\overline{f}}
+				{\Gamma \vdash e_{0}.f_{i}:C_{i}} & (T-Field)\\
+				
+				\inferrule{\Gamma \vdash e_{0}:C_{0}\qquad
+					mtypes~(m,~C_{0})=\overline{D}\rightarrow C\qquad \Gamma \vdash
+					\overline{e} : \overline{C} \qquad \overline{C}~<:~\overline{D}}
+				{\Gamma \vdash e_{0}.m(\overline{e}):C} & (T-Invk)\\
+				
+				\inferrule{fields(C)=\overline{D}\ \overline{f}\qquad \Gamma \vdash
+					\overline{e}:\overline{C} \qquad \overline{C}~<:~\overline{D}}
+				{\Gamma \vdash new\ C(\overline{e}):C} & (T-New)\\
+				
+				\inferrule{\Gamma \vdash e_{0}:D \qquad D~<:~C}
+				{\Gamma \vdash (C)~e_{0}: C} & (T-UCast)\\
+				
+				\inferrule{\Gamma \vdash e_{0}:D\qquad C~<:~D \qquad C \neq D}
+				{\Gamma \vdash (C)~e_{0}:C} & (T-DCast)\\
+				
+				\inferrule{\Gamma \vdash e_{0}:D\qquad C~\nless :~D \qquad D~\nless:~C 
+					\qquad stupid\ warning}
+				{\Gamma \vdash (C)~e_0:C} & (T-SCast)\\
+				
+			\end{tabular}}
+			\vspace{1.5mm}
+			\label{exptyping}
+		\end{table}
+	\end{frame}
+
+    \begin{frame}{Computação}
+        \centering
+        $e \rightarrow e'$
+    \end{frame}
+
+	\begin{frame}{Regras de Computação}
+		\begin{table}[h!]
+			\centering
+			\def\arraystretch{3}
+			\begin{tabular}{cr}
+				\inferrule{fields~(C) = \bar{C} \bar{f}}
+				{(new\ C(\overline{e})).f_i \rightarrow e_i} & (R-Field) \\
+				
+				\inferrule{mbody~(m, C) = \overline{x}.e_0}
+				{(new\ C~(\overline{e})).m~(\overline{d}) \rightarrow[\overline{d}/\overline{x}, new\ C~(\bar{e})/this]e_0} & (R-Invk)\\
+				\inferrule{C<:D}
+				{(D)(new\ C~(\overline{e})) \rightarrow new\ C~(\overline{e})} & (R-Cast)\\
+			\end{tabular}
+			\vspace{1.5mm}
+			\label{expcomput}
+		\end{table}
+	\end{frame}
+	
+	
+	\begin{frame}{Regras de Congruência}
+		\begin{table}[h!]
+			\centering
+			\def\arraystretch{3}
+			\begin{tabular}{cr}
+				\inferrule{e_0 \rightarrow e_0'}
+				{e_0.f\rightarrow e_0'.f} & (RC-Field) \\
+				\inferrule{e_0 \rightarrow e_0'}
+				{e_0.m~(\overline{e})\rightarrow e_0'.m~(\overline{e})} & (RC-Invk-Recv) \\
+				\inferrule{e_i \rightarrow e_i'}
+				{e_0.m~(\dots, e_i, \dots) \rightarrow e_0'.m~(\dots, e_i, \dots)} & (RC-Invk-Arg) \\
+				\inferrule{e_i \rightarrow e_i'}
+				{new\ C~(\dots, e_i, \dots) \rightarrow new\ C~(\dots, e_i', \dots)} & (RC-New-Arg) \\
+				\inferrule{e_0 \rightarrow e_0'}
+				{(C)e_0 \rightarrow (C)e_0'} & (RC-Cast) \\
+				
+			\end{tabular}
+			\vspace{1.5mm}
+			\label{expcongr}
+		\end{table}
+	\end{frame}
+
+    \begin{frame}{Progress}
+        \begin{itemize}
+            \item Um programa bem tipado não está preso
+                \begin{itemize}
+                    \item<2-> Ou é um valor;
+                    \item<3-> Ou dá um passo.
+                \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Preservation}
+        \begin{itemize}
+            \item Se um termo bem tipado dá um passo, então o resultado também é bem tipado.
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Type Safety (ou Soundness)}
+        \begin{itemize}
+            \item Um termo bem tipado nunca fica preso durante a computação.
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Safety = Progress + Preservation}
+        \begin{itemize}
+            \item \emph{"Well-typed program cannot go wrong"} -- Robin Milner 
+
+            \item<2-> Formulado por Wright e Felleisen em 1994 como definição padrão de
+            type safety para linguagens formuladas por \emph{operational semantics}
+        \end{itemize}
     \end{frame}
 
 
-    \begin{frame}{Lemmas}
-        \begin{lemma}[Typed method has body]
-            If $mtype(m, C) = B \rightarrow \overline{B}$ \\
-            then $\exists \overline{x}~\exists e$ such that
-                        $mbody(m, C) = \overline{x}. e$
-        \end{lemma}
-    \end{frame}
-
-    \begin{frame}{Lemmas}
-        \begin{lemma}[Typed method has body - Refinement]
-            If $mtype_R(m, R) = \mathtt{B} \rightarrow \mathtt{Bs}$ \\
-            then $\exists \overline{x}~\exists e$ such that
-                        $mbody_R(m, R) = \overline{x}. e$
-        \end{lemma}
-        \begin{lemma}[Body method has type - Refinement]
-            If $mbody_R(m, R) = \overline{x} . e $ \\
-            then $\exists \overline{B}~\exists B$ such that
-                        $mtype_R(m, R) = \mathtt{B} \rightarrow \mathtt{Bs}$
-        \end{lemma}
-    \end{frame}
-
-    \begin{frame}{Lemmas}
-        \begin{lemma}[Subtype respects method types]
-            If \cdecl{C}{D}{C}{f}{K}{M} \\
-            then $mtype(m, C) = mtype(m, D)$        
-        \end{lemma}
-    \end{frame}
-
-
-    \begin{frame}{Lemmas}
-        \begin{lemma}[Refinement respects method types]
-            If \cdecl{C}{D}{C}{f}{K}{M} \\
-            then $\forall feat,~mtype_R(m, C@feat) = mtype(m, D)$        
-        \end{lemma}
-    \end{frame}
-
-    \begin{frame}{Lemmas}
-        \begin{lemma}[A1.4 - Method Body is Typable]
-            If \mtype{m}{C} = $\overline{D} \rightarrow D$ \\
-            and \mbody{m}{C} = $\overline{x}.e$\\
-            then $\exists C <: D, \exists C_0 <: D_0,~this: D, \overline{x}: \overline{D}\vdash e: C_0$
-        \end{lemma}
-    \end{frame}
-
-
-
-    \begin{frame}{Lemmas}
-        \begin{lemma}[Method Body is Typable - Refinement]
-            If \mtyper{m}{C@feat} = $\overline{D} \rightarrow D$ \\
-            and \mbodyr{m}{C@feat} = $\overline{x}.e$\\
-            then $\exists C <: D, \exists C_0 <: D_0,~this: D, \overline{x}: \overline{D}\vdash e: C_0$
-        \end{lemma}
-    \end{frame}
-
-
-    \begin{frame}{Theorems}
+    \begin{frame}{Theoremas}
         \begin{theorem}[Preservation]
-            If $\Gamma \vdash e : C$ and $e \rightarrow e'$,
-            then $\Gamma \vdash e': C'$ for some $C' <: C$.
+            Se $\Gamma \vdash e : C$ e $e \rightarrow e'$,
+            então $\Gamma \vdash e': C'$ para algum $C' <: C$.
+        \end{theorem}
+        \begin{theorem}[Progress]
+            Se $\vdash e : C$ e não existe $e'$ tal que $e \rightarrow e'$\\
+            Então ou $e$ é um valor, ou contém um downcast como subtermo.
         \end{theorem}
     \end{frame}
 
-    \begin{frame}{Theorems}
-        \begin{theorem}[Progress]
-            Suppose $e$ is closed, well-typed normal form.\\
-            Then either (1) $e$ is a value, or (2) for some evaluation context $E$, we can
-            express $e$ as $e = E[(C)(new D(\overline{e}))]$, with $D \nless: C$.
-        \end{theorem}
+    \begin{frame}{Conclusão}
+        \begin{itemize}
+            \item Tudo isto foi devidamente implementado em Coq.
+        \end{itemize}
     \end{frame}
 
 
@@ -449,8 +524,12 @@
 		\end{thebibliography}
 	\end{frame}
 
+    \begin{frame}{Fim}
+        Perguntas?
+    \end{frame}
+
     \begin{frame}{Appendix}{Helper Functions}
-\begin{table}[!ht]
+    \begin{table}[!ht]
 	\def\arraystretch{2.5}
     \raggedright \hlnew{\textit{Class Name}}\\
 	\centering
@@ -488,85 +567,6 @@
     \label{table:refinement}
     \end{table}
     \end{frame}
-
-
-	\begin{frame}{FJ Typing Rules}
-		\begin{table}[h!]
-			\centering
-			\def\arraystretch{3}
-			\adjustbox{max height=\dimexpr\textheight-5.5cm\relax, max width=\textwidth}{
-			\begin{tabular}{cr}
-				$\Gamma \vdash x:\Gamma(x)$& (T-Var)\\
-				
-				\inferrule{\Gamma \vdash e_{0}:C_{0}\qquad fields~(C_{0})=\overline{C}\
-					\overline{f}}
-				{\Gamma \vdash e_{0}.f_{i}:C_{i}} & (T-Field)\\
-				
-				\inferrule{\Gamma \vdash e_{0}:C_{0}\qquad
-					mtypes~(m,~C_{0})=\overline{D}\rightarrow C\qquad \Gamma \vdash
-					\overline{e} : \overline{C} \qquad \overline{C}~<:~\overline{D}}
-				{\Gamma \vdash e_{0}.m(\overline{e}):C} & (T-Invk)\\
-				
-				\inferrule{fields(C)=\overline{D}\ \overline{f}\qquad \Gamma \vdash
-					\overline{e}:\overline{C} \qquad \overline{C}~<:~\overline{D}}
-				{\Gamma \vdash new\ C(\overline{e}):C} & (T-New)\\
-				
-				\inferrule{\Gamma \vdash e_{0}:D \qquad D~<:~C}
-				{\Gamma \vdash (C)~e_{0}: C} & (T-UCast)\\
-				
-				\inferrule{\Gamma \vdash e_{0}:D\qquad C~<:~D \qquad C \neq D}
-				{\Gamma \vdash (C)~e_{0}:C} & (T-DCast)\\
-				
-				\inferrule{\Gamma \vdash e_{0}:D\qquad C~\nless :~D \qquad D~\nless:~C 
-					\qquad stupid\ warning}
-				{\Gamma \vdash (C)~e_0:C} & (T-SCast)\\
-				
-			\end{tabular}}
-			\vspace{1.5mm}
-			\label{exptyping}
-		\end{table}
-	\end{frame}
-
-	\begin{frame}{FJ Computation Rules}
-		\begin{table}[h!]
-			\centering
-			\def\arraystretch{3}
-			\begin{tabular}{cr}
-				\inferrule{fields~(C) = \overline{C} \overline{f}}
-				{(new\ C(\overline{e})).f_i \rightarrow e_i} & (R-Field) \\
-				
-				\inferrule{mbody~(m, C) = \overline{x}.e_0}
-				{(new\ C~(\overline{e})).m~(\overline{d}) \rightarrow[\overline{d}/\overline{x}, new\ C~(\bar{e})/this]e_0} & (R-Invk)\\
-				\inferrule{C<:D}
-				{(D)(new\ C~(\overline{e})) \rightarrow new\ C~(\overline{e})} & (R-Cast)\\
-			\end{tabular}
-			\vspace{1.5mm}
-			\label{expcomput}
-		\end{table}
-	\end{frame}
-	
-	
-	\begin{frame}{FJ Congruence Rules}
-		\begin{table}[h!]
-			\centering
-			\def\arraystretch{3}
-			\begin{tabular}{cr}
-				\inferrule{e_0 \rightarrow e_0'}
-				{e_0.f\rightarrow e_0'.f} & (RC-Field) \\
-				\inferrule{e_0 \rightarrow e_0'}
-				{e_0.m~(\overline{e})\rightarrow e_0'.m~(\overline{e})} & (RC-Invk-Recv) \\
-				\inferrule{e_i \rightarrow e_i'}
-				{e_0.m~(\dots, e_i, \dots) \rightarrow e_0'.m~(\dots, e_i, \dots)} & (RC-Invk-Arg) \\
-				\inferrule{e_i \rightarrow e_i'}
-				{new\ C~(\dots, e_i, \dots) \rightarrow new\ C~(\dots, e_i', \dots)} & (RC-New-Arg) \\
-				\inferrule{e_0 \rightarrow e_0'}
-				{(C)e_0 \rightarrow (C)e_0'} & (RC-Cast) \\
-				
-			\end{tabular}
-			\vspace{1.5mm}
-			\label{expcongr}
-		\end{table}
-	\end{frame}
 
 
 
@@ -658,6 +658,83 @@
                 {\mathtt{\crefine{R}{C}{f}{KR}{M}{MR}~OK}}\\\\
             \end{tabular}
         \end{table}
+    \end{frame}
+
+
+    \begin{frame}{Lemmas}
+        \begin{lemma}[Typed method has body]
+            If $mtype(m, C) = B \rightarrow \overline{B}$ \\
+            then $\exists \overline{x}~\exists e$ such that
+                        $mbody(m, C) = \overline{x}. e$
+        \end{lemma}
+    \end{frame}
+
+    \begin{frame}{Lemmas}
+        \begin{lemma}[Typed method has body - Refinement]
+            If $mtype_R(m, R) = \mathtt{B} \rightarrow \mathtt{Bs}$ \\
+            then $\exists \overline{x}~\exists e$ such that
+                        $mbody_R(m, R) = \overline{x}. e$
+        \end{lemma}
+        \begin{lemma}[Body method has type - Refinement]
+            If $mbody_R(m, R) = \overline{x} . e $ \\
+            then $\exists \overline{B}~\exists B$ such that
+                        $mtype_R(m, R) = \mathtt{B} \rightarrow \mathtt{Bs}$
+        \end{lemma}
+    \end{frame}
+
+    \begin{frame}{Lemmas}
+        \begin{lemma}[Subtype respects method types]
+            If \cdecl{C}{D}{C}{f}{K}{M} \\
+            then $mtype(m, C) = mtype(m, D)$        
+        \end{lemma}
+    \end{frame}
+
+
+    \begin{frame}{Lemmas}
+        \begin{lemma}[Refinement respects method types]
+            If \cdecl{C}{D}{C}{f}{K}{M} \\
+            then $\forall feat,~mtype_R(m, C@feat) = mtype(m, D)$        
+        \end{lemma}
+    \end{frame}
+
+    \begin{frame}{Lemmas}
+        \begin{lemma}[A1.4 - Method Body is Typable]
+            If \mtype{m}{C} = $\overline{D} \rightarrow D$ \\
+            and \mbody{m}{C} = $\overline{x}.e$\\
+            then $\exists C <: D, \exists C_0 <: D_0,~this: D, \overline{x}: \overline{D}\vdash e: C_0$
+        \end{lemma}
+    \end{frame}
+
+
+
+    \begin{frame}{Lemmas}
+        \begin{lemma}[Method Body is Typable - Refinement]
+            If \mtyper{m}{C@feat} = $\overline{D} \rightarrow D$ \\
+            and \mbodyr{m}{C@feat} = $\overline{x}.e$\\
+            then $\exists C <: D, \exists C_0 <: D_0,~this: D, \overline{x}: \overline{D}\vdash e: C_0$
+        \end{lemma}
+    \end{frame}
+
+
+
+    \begin{frame}{Evaluation Context}
+        \centering
+        \begin{table}[h]
+            $E$ ::= $\square$ | $E.f_i$ | $E.m(\overline{e})$ | $e.m(\overline{e_l}, E, \overline{e_r})$
+            | $(C)~E$ | $new~C(\overline{e_l}, E, \overline{e_r})$
+            \label{table:eval-ctx}
+            \caption{Evaluation Context}
+        \end{table}         
+    \end{frame}
+
+
+
+    \begin{frame}{Appendix}{Theorems}
+        \begin{theorem}[Progress (Using Evaluation Context)]
+            Suppose $e$ is closed, well-typed normal form.\\
+            Then either (1) $e$ is a value, or (2) for some evaluation context $E$, we can
+            express $e$ as $e = E[(C)(new D(\overline{e}))]$, with $D \nless: C$.
+        \end{theorem}
     \end{frame}
 
 
