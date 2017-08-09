@@ -40,8 +40,8 @@
 
 \newcommand{\cdecl}[6]{\texttt{class #1 extends #2 \{\={#3} \={#4}; #5 \={#6}\}}}
 \newcommand{\crefine}[6]{\texttt{refines class #1 \{\={#2} \={#3}; #4 \ensuremath{\mathtt{\overline{#5}~\overline{#6}\}}}}}
-\newcommand{\mdecl}[5]{\texttt{#1 #2 (\={#3} \={#4}) \{return #5;\}}}
-\newcommand{\mrefine}[5]{\texttt{refines #1 #2 (\={#3} \={#4}) \{return #5;\}}}
+\newcommand{\mdecl}[5]{\texttt{#1 #2 (\ensuremath{\mathtt{\overline{#3}~\overline{#4}}}) \{return #5;\}}}
+\newcommand{\mrefine}[5]{\texttt{refines #1 #2 (\ensuremath{\mathtt{\overline{#3}~\overline{#4}}}) \{return #5;\}}}
 
 
 \title[Mechanization and Overhaul of FFJ]{Mechanization and Overhaul of Feature Featherweight Java with Coq}
@@ -91,19 +91,20 @@
                 \item Equipamentos Médicos
                 \item Carros
             \end{itemize}
-        \item A medida que o software e o hardware crescem dificulta encontrar
+        \item<2-> A medida que o software e o hardware crescem dificulta encontrar
             bugs através de testes.
-        \item Bugs encontrados tardiamente são caros.
+        \item<3-> Bugs encontrados tardiamente são caros.
+            \only<3->\footnote{Fonte: The Economic Impacts of Inadequate Infraestructure for Software Testing}
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Bugs são caros}
-        \centering
-            Custo Relativo para Corrigir Defeitos Encontrados em
-            Diferentes Fases do Desenvolvimento de Software.\footnote{Fonte: The Economic Impacts of Inadequate Infraestructure for Software Testing}\\
+    %% \begin{frame}{Bugs são caros}
+    %%     \centering
+    %%         Custo Relativo para Corrigir Defeitos Encontrados em
+    %%         Diferentes Fases do Desenvolvimento de Software.\footnote{Fonte: The Economic Impacts of Inadequate Infraestructure for Software Testing}\\
 
-            \includegraphics[width=\textwidth]{custo_bug}
-    \end{frame}
+    %%         \includegraphics[width=\textwidth]{custo_bug}
+    %% \end{frame}
 
     \begin{frame}{O que é feature?}
         \centering
@@ -121,7 +122,7 @@
 
     \begin{frame}{Objetivo}
         \centering
-        Mecanizar Feature Featherweight Java em Coq
+        Mecanizar Feature Featherweight Java 
     \end{frame}
 
     \section{Featherweight Java}
@@ -234,12 +235,12 @@
             \begin{tabular}{c}
                 $fields~$\texttt{Object}$=\bullet$ \\
                 \\
-                \inferrule{\texttt{class C extends D \{\=C \=f; K \=M\}} \qquad 
-                        \neg\textit{last}~\texttt{C}}
-                    {fields~\texttt{C}=fields~\texttt{D, \={C} \={f}}} \\
+                \inferrule{\texttt{class C extends {\only<3>{\color{red}}D} \{{\only<3>{\color{red}}\=C \=f}; K \=M\}} \qquad 
+                        \only<2>{\color{red}}\neg\textit{last}~\texttt{C}}
+                    {fields~\texttt{C}=fields~\texttt{{\only<3>{\color{red}}D}, {\only<3>{\color{red}}\={C} \={f}}}} \\
                 \\
                 \inferrule{\texttt{class C extends D \{\=C \=f; K \=M\}}}
-                    {fields~\texttt{C}=fields~\texttt{D, \={C} \={f},} ~fields_R~(last~\texttt{C})}\\
+                    {fields~\texttt{C}=fields~\texttt{D, \={C} \={f},}~\only<4>{\color{red}}fields_R~(last~\texttt{C})}\\
                 \\
             \end{tabular}
         \end{table}
@@ -251,11 +252,11 @@
             \centering
             \begin{tabular}{c}
                 \inferrule{\texttt{refines R \{\=C \=f; KR \=M \={MR}\}} \qquad
-                        \neg pred~\texttt{R}}
+                        \only<2>{\color{red}}\neg pred~\texttt{R}}
                     {fields_R~\texttt{R}~=~\texttt{\=C \=f}} \\
                 \\
-                \inferrule{\texttt{refines R \{\=C \=f; KR \=M \={MR}\}}}
-                    {fields_R~\texttt{R}=fields_R~(pred~\texttt{P}), \texttt{\={C} \={f}}}\\
+                \inferrule{\texttt{refines R \{{\only<3>{\color{red}}\=C \=f}; KR \=M \={MR}\}}}
+                    {fields_R~\texttt{R}=fields_R~({\only<3>{\color{red}}pred~\texttt{R}}), \only<3>{\color{red}}\texttt{\={C} \={f}}}\\
             \end{tabular}
         \end{table}
     \end{frame}
@@ -264,23 +265,23 @@
 
     \newcommand{\mtype}[2]{\ensuremath{mtype~(\texttt{#1},\texttt{#2})}}
     \newcommand{\mtyper}[2]{\ensuremath{mtype_R~(\mathtt{#1},\mathtt{#2})}}
-    \newcommand{\mrettype}[2]{\texttt{\={#1}}\ensuremath{~\rightarrow~}\texttt{#2}}
+    \newcommand{\mrettype}[2]{\ensuremath{\mathtt{\overline{#1}}}~\rightarrow~\mathtt{#2}}
 
     \begin{frame}{Method Type Lookup}
         \begin{table}[h!]
             \begin{tabular}{c}
                 \inferrule{\cdecl{C}{D}{C}{f}{K}{M} \qquad 
-                \mdecl{B}{m}{B}{x}{e} \in \texttt{\={M}} \\
-                \neg\mtyper{m}{\mathnormal{last}~C}}
-                {\mtype{m}{C}~=~\mrettype{B}{B}} \\ 
+                \only<5>{\color{red}}\mdecl{{\only<6>{\color{red}}B}}{m}{{\only<6>{\color{red}}B}}{x}{e} \in \texttt{\={M}} \\
+                \only<2,4-5>{\color{red}}\neg\mtyper{m}{\mathnormal{last}~C}}
+                {\mtype{m}{C}~=~\mrettype{\only<6>{\color{red}}B}{\only<6>{\color{red}}B}} \\ 
                 \\
-                \inferrule{\cdecl{C}{D}{C}{f}{K}{M} \qquad 
-                    \texttt{m}\notin~\texttt{\={M}} \\\\
-                    \neg\mtyper{m}{\mathnormal{last}~C}}
-                {\mtype{m}{C}~=~\mtype{m}{D}} \\
+                \inferrule{\cdecl{C}{{\only<8>{\color{red}}D}}{C}{f}{K}{M} \qquad 
+                    \only<7>{\color{red}}\texttt{m}\notin~\texttt{\={M}} \\\\
+                    \only<2,4,7>{\color{red}}\neg\mtyper{m}{\mathnormal{last}~C}}
+                {\mtype{m}{C}~=~\mtype{m}{\only<8>{\color{red}}D}} \\
                 \\
                 \inferrule{\cdecl{C}{D}{C}{f}{K}{M}}
-                {\mtype{m}{C}~=~\mtyper{m}{\mathnormal{last}~C}} \\
+                {\mtype{m}{C}~=~\only<2-3>{\color{red}}\mtyper{m}{\mathnormal{last}~C}} \\
 
             \end{tabular}
             \quad\\
@@ -295,16 +296,16 @@
 	\centering
 	\begin{tabular}{c}
         \inferrule{\crefine{R}{C}{f}{KR}{M}{MR} \qquad 
-                \mdecl{B}{m}{B}{x}{e} \in \texttt{\={M}}}
-                {\mtyper{m}{R}~=~\mrettype{B}{B}} \\ \\
+                \only<2>{\color{red}}\mdecl{{\only<3>{\color{red}}B}}{m}{{\only<3>{\color{red}}B}}{x}{e} \in \texttt{\={M}}}
+                {\mtyper{m}{R}~=~\mrettype{\only<3>{\color{red}}B}{\only<3>{\color{red}}B}} \\ \\
         \inferrule{\crefine{R}{C}{f}{KR}{M}{MR} \qquad 
-                \texttt{m} \notin \texttt{\={M}} \\
-                \mrefine{B}{m}{B}{x}{e} \in \overline{\texttt{MR}}}
-                {\mtyper{m}{R}~=~\mrettype{B}{B}} \\ \\
+                \only<4>{\color{red}}\texttt{m} \notin \texttt{\={M}} \\
+                \only<4>{\color{red}}\mrefine{{\only<5>{\color{red}}B}}{m}{{\only<5>{\color{red}}B}}{x}{e} \in \overline{\texttt{MR}}}
+                {\mtyper{m}{R}~=~\mrettype{\only<5>{\color{red}}B}{\only<5>{\color{red}}B}} \\ \\
         \inferrule{\crefine{R}{C}{f}{KR}{M}{MR} \\\\
-                \texttt{m} \notin \texttt{\={M}} \quad
-                \texttt{m} \notin \overline{\texttt{MR}}}
-                {\mtyper{m}{R}~=~\mtyper{m}{\mathnormal{pred}~P}} \\ 
+                \only<6>{\color{red}}\texttt{m} \notin \texttt{\={M}} \quad
+                \only<6>{\color{red}}\texttt{m} \notin \overline{\texttt{MR}}}
+                {\mtyper{m}{R}~=~\mtyper{m}{\only<6>{\color{red}}\mathnormal{pred}~P}} \\ 
     \end{tabular}
     \end{table}
     \end{frame}
@@ -356,8 +357,12 @@
 
     \begin{frame}{Tipagem}
         \centering
-        \only<1>{$\Gamma \vdash e: C$}
-        \only<2->{$a: A, b: B, ..., x: X \vdash e: C$}
+        \only<1->{$\Gamma \vdash e: C$}
+
+        \only<2->{
+        $\Downarrow$
+
+        $a: A, b: B, ..., x: X \vdash e: C$}
     \end{frame}
 
 	\begin{frame}{Regras de Tipagem}
@@ -461,7 +466,7 @@
 
     \begin{frame}{Type Safety (ou Soundness)}
         \begin{itemize}
-            \item Um termo bem tipado nunca fica preso durante a computação.
+        \item Um termo bem tipado nunca fica preso durante a computação.
         \end{itemize}
     \end{frame}
 
@@ -477,18 +482,19 @@
 
     \begin{frame}{Theoremas}
         \begin{theorem}[Preservation]
-            Se $\Gamma \vdash e : C$ e $e \rightarrow e'$,
-            então $\Gamma \vdash e': C'$ para algum $C' <: C$.
+            Se $\Gamma \vdash \mathtt{e} : C$ e $\mathtt{e} \rightarrow \mathtt{e'}$,
+            então $\Gamma \vdash \mathtt{e'}: C'$ para algum $C' <: C$.
         \end{theorem}
         \begin{theorem}[Progress]
-            Se $\vdash e : C$ e não existe $e'$ tal que $e \rightarrow e'$\\
-            Então ou $e$ é um valor, ou contém um downcast como subtermo.
+            Se $\vdash \mathtt{e} : C$ e não existe $\mathtt{e'}$ tal que $\mathtt{e} \rightarrow \mathtt{e'}$\\
+            Então ou $\mathtt{e}$ é um valor, ou contém um downcast como subtermo.
         \end{theorem}
     \end{frame}
 
     \begin{frame}{Conclusão}
         \begin{itemize}
-            \item Tudo isto foi devidamente implementado em Coq.
+            \item Tudo isto foi devidamente implementado em Coq.\footnote{\url{https://github.com/hephaestus-pl/coqffj}}
+            \footnote{\url{https://github.com/hephaestus-pl/coqfj}}
         \end{itemize}
     \end{frame}
 
@@ -524,7 +530,9 @@
 		\end{thebibliography}
 	\end{frame}
 
-    \begin{frame}{Fim}
+    \begin{frame}{}
+        \centering
+        \Huge
         Perguntas?
     \end{frame}
 
@@ -730,10 +738,10 @@
 
 
     \begin{frame}{Appendix}{Theorems}
-        \begin{theorem}[Progress (Using Evaluation Context)]
+        \begin{theorem}[Progress -- Using Evaluation Context]
             Suppose $e$ is closed, well-typed normal form.\\
             Then either (1) $e$ is a value, or (2) for some evaluation context $E$, we can
-            express $e$ as $e = E[(C)(new D(\overline{e}))]$, with $D \nless: C$.
+            expression $e$ as $e = E[(C)(new~D(\overline{e}))]$, with $D \nless: C$.
         \end{theorem}
     \end{frame}
 
