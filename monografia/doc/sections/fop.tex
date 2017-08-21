@@ -44,7 +44,7 @@ several different specializations of the software,
 while reducing delivery time which by its turn reduces cost.
 
 Take for example a \gls{SPL} illustrated in \ref{fig:cellphone-fm} for a mobile phone operational system. 
-Every cellphone must be able to make calls and receive calls and having a screen. 
+Every cellphone must be able to make calls and receive calls and have a screen. 
 But there are optional features, such as having a GPS, being able to reproduce media,
 etc.
 
@@ -58,7 +58,7 @@ etc.
 Formally a \gls{SPL} is defined by a triple: the \gls{FM}, \gls{CA},
 and the \gls{CK}.
 
-The \gls{FM} is the set of all features. They may be: \emph{obligatory}, \emph{optional}, \emph{alternative}, \emph{and} and \emph{or}.
+The \gls{FM} is the set of all features. They may be: \emph{obligatory}, \emph{optional}, \emph{alternative}, \emph{and}, and \emph{or}.
 
 The \gls{CA} is everything useful in the process of development, such as documentation, test cases, code, and so on.
 
@@ -78,7 +78,7 @@ factor in every feature introduction.
 This is where formal methods shines. With formal methods it is possible to study how features interact with each other, postulate properties
 and provide safety theorems for \glspl{SPL} without having to generate every single product.
 
-\section{A Running Example: The Expression Product Line in \gls{FOP}}\label{seq:fop-ex}
+\section{A Running Example: The Expression Product Line in FOP Language}\label{seq:fop-ex}
 
 \begin{wrapfigure}{r}{0.45\textwidth}
     \centering
@@ -115,7 +115,7 @@ of Figure~\ref{fig:epl-base}.
 The details of the EPL AHEAD non-mandatory feature packages are as follows. 
 
 \begin{itemize}
-    \item Features \texttt{integer} and {double} refine the \texttt{Value} class of 
+    \item Features \texttt{integer} and \texttt{double} refine the \texttt{Value} class of 
     the \textsc{Base} package by introducing a new attribute named 
     \texttt{value}, either with type \texttt{int} or \texttt{double}. According 
     to the EPL feature model, only one of these features might be selected for 

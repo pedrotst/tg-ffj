@@ -21,7 +21,7 @@ formally documenting these changes.
 Even though these changes are significant, as discussed in \cref{chap:ffj}, 
 the philosophy of \gls{FFJ}, \gls{FOP}, and Stepwise Refinement are maintained.
 In \gls{FFJ}, as well as in \gls{FFJ+}, classes can be added and 
-modified by the introduction of a new feature (as discussed in the previous section).
+modified by the introduction of a new feature.
 An existing class can be extended by a class refinement. A class refinement is declared like a class but
 preceded by the keyword \texttt{refines}. For example, \texttt{refines class C@feat \{$\dots$\}} refers to a class refinement that
 refines the class \texttt{C}. This way, a refinement may add new fields, and methods to the class
@@ -48,7 +48,7 @@ does not references features that have not been introduced yet.
 We redefine the denotation of \textsf{RT} from \gls{FFJ}.
 In the original version, it was used to retrieve the refinement name given a 
 refinement declaration. This is no longer necessary in \gls{FFJ+}, since
-that information is already encoded in the syntax.
+that information is already encoded in the abstract syntax.
 
 Finally, in the original definition of \gls{FFJ}, the lookup functions are 
 somewhat circumvoluted. Accordingly, we propose a very different approach
@@ -105,10 +105,10 @@ chain}. The order in which a refinement introduced matters, and a refinement
 that is introduced right before another is called \emph{predecessor}. 
 
 As class inheritance, refinements cannot introduce a field with the same
-name already declared before. Methods, in the other hand, may overload an already
+name already declared before. Methods, on the other hand, may overload an already
 introduced class, this can be seen in \texttt{Sub@Eval eval} and \texttt{Add@Eval eval}.
-Overloading, in the other hand, is not allowed, i.e. if the programmer wants to introduce the
-same method, it must have the same number of arguments, the same argument types
+Overloading, on the other hand, is not allowed, i.e. if the programmer wants to introduce the
+a method with a name that is already used, it must have the same number of arguments, the same argument types
 and the same return type as the previous function definition.
 
 The distinction between method introduction and overriding allows the type system to check
@@ -119,7 +119,8 @@ In order to retrieve the correct fields or the correct method of a class, it is
 necessarily to walk in the subclass refinement correctly. As shown in \Cref{fig:refinement-order}
 first start from the last refinement of a class, walk through every predecessor,
 and when you get to the last refinement, you go to the class, and finally to the
-superclass last refinement. And so on until you reach the Object.
+superclass last refinement. And so on until you reach the Object class, which
+is the root class of all class hierarchies.
 
 \begin{figure}[htb]
     \centering

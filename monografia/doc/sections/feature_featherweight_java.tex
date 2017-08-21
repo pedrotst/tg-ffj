@@ -1,8 +1,7 @@
 \chapter{Overhaul Feature Featherweight Java}\label{chap:ffj}
 
 \section{Syntax}
-The Syntax of \gls{FFJ} is a straightforward \gls{FOP} extension of \gls{FJ}. Due to the lack
-of space we do not present the formal definition \gls{FJ} nor \gls{FFJ}, but instead we follow
+The Syntax of \gls{FFJ} is a straightforward \gls{FOP} extension of \gls{FJ}. We follow
 the same scheme of the \gls{FFJ} original definition in \cite{apel_feature_2008} and present
 the modified rules from \gls{FFJ} to \gls{FFJ+} highlighted with \hlmod{shaded yellow boxes} 
 and new rules highlighted by \hlnew{shaded purple boxes}. Also notice that the successor and 
@@ -41,19 +40,19 @@ the refinement relations were simply dropped for being unnecessary by now.
         \quad \texttt{new~C(\={e})} \hfill\textit{object creation}
     \end{tabularx}
     \quad
-    \caption{\gls{FFJ} Syntax}
+    \caption{\gls{FFJ+} Syntax}
     \label{abstractsyntax}
 \end{table}
 %\end{center}
 
 
-The syntax of \gls{FFJ+} constructs is given at \cref{abstractsyntax}. The metavariables
+The syntax of \gls{FFJ+} constructs is given at \Cref{abstractsyntax}. The metavariables
 \texttt{A}, \texttt{B}, \texttt{C}, \texttt{D} and \texttt{E} ranges over class names, \texttt{f} and \texttt{g} range over
 field names; \texttt{m} ranges method name; \texttt{x} ranges over variable, \texttt{v} ranges over
 values, \texttt{feat} ranges over feature names. We assume that the set of variables includes the special variable \texttt{this}, which
 cannot be used as the name of an argument of a method.
 
-We write \texttt{\=f} as a shorthand for a possible empty sequence \texttt{f\textsubscript1}, \dots, \texttt{f\textsubscript{n}} 
+We write \texttt{\=f} as a shorthand for a possibly empty sequence \texttt{f\textsubscript1}, \dots, \texttt{f\textsubscript{n}} 
 and similarly for \texttt{\=C}, \texttt{\=x}, \texttt{\=e}, etc. We abbreviate the operations on pairs of sequences
 ``\texttt{\=C~\=f}'' for ``\texttt{C\textsubscript1~f\textsubscript1},\dots, \texttt{C\textsubscript{n}~f\textsubscript{n}}''
 and ``\texttt{this.\=f=\=f;}'' as a shorthand for 
@@ -411,19 +410,19 @@ not yet declared earlier in the refinement chain.
 \begin{table}[h!]
     \centering
     \begin{tabular}{c}
-    	\rowcolor{shpurple}
+    	\rowcolor{shyellow}
         \inferrule{\mathtt{\bar{x}: \bar{C}, this: C~\vdash t_0 : E_0\qquad E_0 <: C_0 } \\ \\
             \mathtt{CT(C)~=class~C~extends~D~\{\dots\}\qquad
             \mathnormal{override}(m, D, \bar{C}\rightarrow C)}}
             {\mathtt{C_0~m~(\bar{C}~\bar{x})\{return~t_0;\}~OK~in~C}}\\\\
 
-    	\rowcolor{shpurple}
+    	\rowcolor{shyellow}
         \inferrule{\mathtt{\bar{x}: \bar{C}, this: C~\vdash t_0 : E_0\qquad E_0 <: C_0 \qquad R~=~C@feat} \\ \\
                 \mathtt{CT(C)~=class~C~extends~D~\{\dots\}\qquad RT(R)~=~refines~R~\{\dots~\bar{M}~\dots\}}\\ \\
                 \mathtt{\mathnormal{override}(m, D, \bar{C}\rightarrow C) \qquad \mathnormal{introduce}~m~R\qquad m \in \bar{M}}}
             {\mathtt{C_0~m~(\bar{C}~\bar{x})\{return~t_0;\}~OK~in~R}}\\\\
 
-        \rowcolor{shpurple}
+        \rowcolor{shyellow}
         \inferrule{\mathtt{\bar{x}: \bar{C}, this: C~\vdash t_0 : E_0\qquad E_0 <: C_0 \qquad R~=~C@feat} \\ \\
                 \mathtt{RT(R)~=~refines~R~\{\dots~\bar{M},~\overline{MR}~\dots\} \qquad m\notin\bar{M} \qquad m\in\overline{MR}}\\ \\
                 \mathtt{\mathnormal{override_R}(m, R, \bar{C}\rightarrow C)}}
@@ -437,7 +436,6 @@ not yet declared earlier in the refinement chain.
 \begin{table}[h!]
     \centering
     \begin{tabular}{c}
-    	\rowcolor{shpurple}
         \inferrule{\mathtt{K~=~C~(\bar{D}~\bar{g},~\bar{C}~\bar{f})~\{super(\bar{g});~this.\bar{f}=\bar{f}\}\qquad
             \mathnormal{fields}(D)~=~\bar{D}~\bar{g} \qquad \overline{M}~OK~in~C}}
             {\mathtt{\cdecl{C}{D}{C}{f}{K}{M}~OK}}\\\\
@@ -458,7 +456,7 @@ only have well formed methods and well formed method refinements.
 A well formed method and method refinement must has a closed expression \texttt{e} under 
 the variables of the function parameters. \texttt{e} must a subtype of the return
 type of the function. And if a function with the same name was declared before, 
-it must have the same name. If a method refinement is declared in a method refinement,
+it must have the same name. If a method refinement is declared in a class refinement,
 this rule guarantess that it will override the superclass accordingly.
 
 \section{Typing and Reduction}
@@ -565,7 +563,7 @@ Here our evaluation context denotes a reduction happening:
 In this transition from \gls{FJ} to \gls{FFJ+} a few additional lemmas were needed.
 They are only related to the lookup functions, since \gls{FFJ+} does not alter
 the typing rules or the reduction rules. This means that the main safety theorems
-presented by Igarashi et al \cite{igarashi_featherweight_2001} goes 
+presented by Igarashi et al \cite{igarashi_featherweight_2001} remain 
 perfectly unchanged.
 
 Below we list a few of the most important lemmas. The definition \gls{FFJ+}
@@ -578,7 +576,7 @@ These lemmas follows the idea of extending the original lemmas stated for
 \gls{FJ} with the \gls{FFJ+} definitions, specially for the lookup functions.
 
 \begin{lemma}[Typed method has body]\label{lemma:typed-method-body}
-    If $mtype(m, C) = B \rightarrow \overline{B}$ \\
+    If $mtype(m, C) = \mathtt{\bar{B}} \rightarrow \mathtt{B}$ \\
     then $\exists \bar{x}~\exists e$ such that
         $mbody(m, C) = \bar{x}. e$
 \end{lemma}
@@ -594,7 +592,7 @@ However it is also necessary to prove its converse, i.e. $mbody_R$ implies
 $mtype_R$ since it is used the negation of $mtype_R$ on the definitions.
 
 \begin{lemma}[Typed method has body - Refinement]
-    If $mtype_R(m, R) = \mathtt{B} \rightarrow \mathtt{Bs}$ \\
+    If $mtype_R(m, R) = \mathtt{\bar{B}} \rightarrow \mathtt{B}$ \\
     then $\exists \bar{x}~\exists e$ such that
         $mbody_R(m, R) = \bar{x}. e$
 \end{lemma}
@@ -602,7 +600,7 @@ $mtype_R$ since it is used the negation of $mtype_R$ on the definitions.
 \begin{lemma}[Body method has type - Refinement]
     If $mbody_R(m, R) = \bar{x} . e $ \\
     then $\exists \overline{B}~\exists B$ such that
-        $mtype_R(m, R) = \mathtt{B} \rightarrow \mathtt{Bs}$
+        $mtype_R(m, R) = \mathtt{\bar{B}} \rightarrow \mathtt{B}$
 \end{lemma}
 
 Next it is needed to show that method signatures respects the signatures
@@ -628,9 +626,9 @@ is also necessary an inner induction on $override_R$.
             Since $C@feat$ is well formed we have $override_R(m, (C@feat), Ds \rightarrow D0)$,
             we proceed by induction on the structure of $override_R$.
         \begin{enumerate}
-            \item Case $C@feat$ is the first refinement we have $mtype(m, C) = mtype_R(m, C@feat)$, by well formed of method in a class (\cref{method-typing}) we have $override(m,~C,~Ds~'\rightarrow~D_0')$
+            \item Case $C@feat$ is the first refinement we have $mtype(m, C) = mtype_R(m, C@feat)$, by well- formedness of method in a class (\Cref{method-typing}) we have $override(m,~C,~Ds~'\rightarrow~D_0')$
             \item Case $C@feat$ has a predecessor $P$, and $P$ declares $m$
-                by well formed of method in a refinement (\cref{method-typing}) we have $override(m, P, Ds' \rightarrow D_0')$
+                by well formed of method in a refinement (\Cref{method-typing}) we have $override(m, P, Ds' \rightarrow D_0')$
             \item Case $C@feat$ has a predecessor $P$ but $P$ does not declare $m$ the thesis follows trivially by the induction hypothesis.
         \end{enumerate}
         \item Case $C@feat$ does not declare $m$ the thesis follows trivially by the induction hypothesis.
